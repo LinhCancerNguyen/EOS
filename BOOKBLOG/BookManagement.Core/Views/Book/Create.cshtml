@@ -1,0 +1,79 @@
+﻿@model BookManagement.Core.Models.Book
+
+<div class="row">
+    <div class="col-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <form class="forms-sample" asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group row">
+                        <label asp-for="BookName" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Book Name" asp-for="BookName">
+                            <span asp-validation-for="BookName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="ImageUrl" class="col-sm-3 col-form-label"></label>
+                        <input type="file" name="img[]" class="file-upload-default">
+                        <div class="input-group col-sm-9">
+                            <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image" asp-for="ImageUrl">
+                            <span class="input-group-append">
+                                <button class="file-upload-browse btn btn-info" type="button">Upload</button>
+                            </span>
+                            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Author" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <select asp-for="Author" class="form-control" asp-items="ViewBag.Author"></select>
+                            <span asp-validation-for="Author" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="GenreId" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <select asp-for="GenreId" class="form-control" asp-items="ViewBag.GenreId"></select>
+                            <span asp-validation-for="GenreId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Synopsis" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Synopsis" asp-for="Synopsis">
+                            <span asp-validation-for="Synopsis" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="PublishDate" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Publish Date" asp-for="PublishDate">
+                            <span asp-validation-for="PublishDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="ReviewDate" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Review Date" asp-for="ReviewDate">
+                            <span asp-validation-for="ReviewDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Review" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Review" asp-for="Review">
+                            <span asp-validation-for="Review" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success mr-2">Create</button>
+                        <button asp-action="Index" class="btn btn-light">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

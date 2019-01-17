@@ -1,4 +1,5 @@
-﻿using ExamCore.Models;
+﻿using ExamCore.Data;
+using ExamCore.Models;
 using ExamCore.Services;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,14 @@ namespace ExamCore.Repositories
 {
     public class AdminRepository : IAdmin
     {
-        public IEnumerable<Admin> All => throw new NotImplementedException();
+        private ExamDB Db = null;
+
+        public AdminRepository(ExamDB _Db)
+        {
+            Db = _Db;
+        }
+
+        public IEnumerable<Admin> All => Db.Admin;
 
         public void Add(Admin _Admin)
         {
@@ -21,9 +29,12 @@ namespace ExamCore.Repositories
             throw new NotImplementedException();
         }
 
-        public Admin GetAdmin(int? Id)
+        public Admin GetAdmin(string username, string password)
         {
-            throw new NotImplementedException();
+            var admin = Db.Admin
+                .Where(a => a.Username.Equals(username) && a.Password.Equals(password))
+                .SingleOrDefault();           
+            return admin;
         }
 
         public void Remove(int? Id)

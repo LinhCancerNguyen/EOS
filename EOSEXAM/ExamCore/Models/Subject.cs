@@ -10,5 +10,7 @@ namespace ExamCore.Models
         public virtual int Id { get; set; }
         public virtual string Name { get; set; }
         public virtual string Code { get; set; }
+        public virtual IList<Question> Questions {get; set;}
+        public virtual IList<Result> Results { get; set; }
     }
 }

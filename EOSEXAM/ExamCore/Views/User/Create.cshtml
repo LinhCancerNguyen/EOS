@@ -1,0 +1,43 @@
+﻿@model ExamCore.Models.User
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row">
+    <div class="col-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <form class="forms-sample" asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group row">
+                        <label asp-for="Name" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Name" asp-for="Name">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Email" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="exampleInputPassword2" placeholder="Email" asp-for="Email">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Password" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" asp-for="Password">
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success mr-2">Create</button>
+                        <button asp-action="Index" class="btn btn-light">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

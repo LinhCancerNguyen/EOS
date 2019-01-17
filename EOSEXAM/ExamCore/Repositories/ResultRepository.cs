@@ -1,5 +1,7 @@
-﻿using ExamCore.Models;
+﻿using ExamCore.Data;
+using ExamCore.Models;
 using ExamCore.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,26 +11,36 @@ namespace ExamCore.Repositories
 {
     public class ResultRepository : IResult
     {
-        public IEnumerable<Result> All => throw new NotImplementedException();
+        private ExamDB Db = null;
+
+        public ResultRepository(ExamDB _Db)
+        {
+            Db = _Db;
+        }
+
+        public IEnumerable<Result> All => Db.Result;
 
         public void Add(Result _Result)
         {
-            throw new NotImplementedException();
+            Db.Result.Add(_Result);
+            Db.SaveChanges();
         }
 
         public void Edit(Result _Result)
         {
-            throw new NotImplementedException();
+            Db.Entry(_Result).State = EntityState.Modified;
+            Db.SaveChanges();
         }
 
         public Result GetResult(int? Id)
         {
-            throw new NotImplementedException();
+            return Db.Result.Find(Id);
         }
 
         public void Remove(int? Id)
         {
-            throw new NotImplementedException();
+            Db.Result.Remove(Db.Result.Find(Id));
+            Db.SaveChanges();
         }
     }
 }

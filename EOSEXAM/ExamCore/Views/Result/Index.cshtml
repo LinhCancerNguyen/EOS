@@ -1,0 +1,63 @@
+﻿@model dynamic
+
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<div class="col-12 stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Subject</th>
+                            <th>Mark</th>
+                            <th>Correct</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Result r in Model.Result)
+                        {
+                            <tr>
+                                <td>
+                                    @foreach (User u in Model.User)
+                                    {
+                                        if (u.Id == r.User.Id)
+                                        {
+                                            @Html.DisplayFor(modelItem => u.Name)
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (Subject s in Model.Subject)
+                                    {
+                                        if (s.Id == r.Subject.Id)
+                                        {
+                                            <ul>@Html.DisplayFor(modelItem => s.Name)</ul>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => r.Mark)
+                                </td>
+                                <td>
+                                   
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@r.Id"><label class="badge badge-warning">Edit</label></a>
+                                </td>
+                                <td>
+                                    <a asp-action="Delete" asp-route-id="@r.Id"><label class="badge badge-danger">Delete</label></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

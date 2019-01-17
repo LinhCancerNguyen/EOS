@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ExamCore.Data;
 using ExamCore.Repositories;
 using ExamCore.Services;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -29,6 +30,14 @@ namespace ExamCore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ExamDB>(options => options.UseSqlServer("Server=V00288;Database=ExamDB;Trusted_Connection=True;user id=sa;password=Cancer2306;"));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(option =>
+                {
+                    option.LoginPath = "/Admin/Login";
+                    option.LogoutPath = "/Admin/Logout";
+                });
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -37,6 +46,9 @@ namespace ExamCore
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<IAdmin, AdminRepository>();
             services.AddTransient<IOption, OptionRepository>();
@@ -53,6 +65,7 @@ namespace ExamCore
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                //app.UseBrowserLink();
             }
             else
             {
@@ -60,6 +73,7 @@ namespace ExamCore
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -68,7 +82,7 @@ namespace ExamCore
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Admin}/{action=Login}/{id?}");
             });
         }
     }

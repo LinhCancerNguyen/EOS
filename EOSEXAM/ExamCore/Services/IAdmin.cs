@@ -9,7 +9,7 @@ namespace ExamCore.Services
     public interface IAdmin
     {
         IEnumerable<Admin> All { get; }
-        Admin GetAdmin(int? Id);
+        Admin GetAdmin(string username, string password);
         void Add(Admin _Admin);
         void Remove(int? Id);
         void Edit(Admin _Admin);

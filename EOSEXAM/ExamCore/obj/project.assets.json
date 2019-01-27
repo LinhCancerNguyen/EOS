@@ -12530,23 +12530,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\linh.nguyenthithuy1\\.nuget\\packages\\": {},
+    "C:\\Users\\LinhCancer Nguyen\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\EOS\\EOSEXAM\\ExamCore\\ExamCore.csproj",
+      "projectUniqueName": "D:\\VTI\\EOS\\EOSEXAM\\ExamCore\\ExamCore.csproj",
       "projectName": "ExamCore",
-      "projectPath": "D:\\EOS\\EOSEXAM\\ExamCore\\ExamCore.csproj",
-      "packagesPath": "C:\\Users\\linh.nguyenthithuy1\\.nuget\\packages\\",
-      "outputPath": "D:\\EOS\\EOSEXAM\\ExamCore\\obj\\",
+      "projectPath": "D:\\VTI\\EOS\\EOSEXAM\\ExamCore\\ExamCore.csproj",
+      "packagesPath": "C:\\Users\\LinhCancer Nguyen\\.nuget\\packages\\",
+      "outputPath": "D:\\VTI\\EOS\\EOSEXAM\\ExamCore\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\linh.nguyenthithuy1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\LinhCancer Nguyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

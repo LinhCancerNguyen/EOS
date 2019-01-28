@@ -12540,23 +12540,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\LinhCancer Nguyen\\.nuget\\packages\\": {},
+    "C:\\Users\\linh.nguyenthithuy1\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\VTI\\EOSEXAM\\ExamOnline\\ExamOnline.csproj",
+      "projectUniqueName": "D:\\EOS\\EOSEXAM\\ExamOnline\\ExamOnline.csproj",
       "projectName": "ExamOnline",
-      "projectPath": "D:\\VTI\\EOSEXAM\\ExamOnline\\ExamOnline.csproj",
-      "packagesPath": "C:\\Users\\LinhCancer Nguyen\\.nuget\\packages\\",
-      "outputPath": "D:\\VTI\\EOSEXAM\\ExamOnline\\obj\\",
+      "projectPath": "D:\\EOS\\EOSEXAM\\ExamOnline\\ExamOnline.csproj",
+      "packagesPath": "C:\\Users\\linh.nguyenthithuy1\\.nuget\\packages\\",
+      "outputPath": "D:\\EOS\\EOSEXAM\\ExamOnline\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\LinhCancer Nguyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\linh.nguyenthithuy1\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

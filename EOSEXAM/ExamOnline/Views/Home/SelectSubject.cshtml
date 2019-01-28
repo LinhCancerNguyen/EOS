@@ -1,29 +1,54 @@
-﻿@model IEnumerable<ExamOnline.Models.Subject>
+﻿@model ExamOnline.Models.Subject
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container">
-
-    <div class="userConnected" style="border:2px dashed #cecaca; border-radius: 10px; margin-top: 3%;">
-
-        <p>@ViewData["User"]</p>
-
-    </div>
-
-
-    <div class="SelQuiz">
-
-        <div class="panel panel-default" style="width: 37%; margin: 20% 32%;">
-            <div class="panel-heading">Select Your Quiz  ^_^</div>
-            <div class="panel-body">
-
-                
-
+    <div class="row">
+        <div class="col-12 stretch-card">
+            <div class="card">
+                <div class="card-body" style="border:2px dashed #cecaca; border-radius: 10px;">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p><strong>Welcome: </strong> @ViewData["User"]</p>
+                        </div>
+                        <div class="col-md-5">
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
     </div>
-
+    <div class="row">
+        <div class="col-12 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <form class="forms-sample" method="post">
+                        <div class="card-body">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group" style="text-align: center">
+                               <h3 style="font-family:'Times New Roman', Times, serif">Select Subject (^-^)</h3>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.DropDownListFor(model => model.SubjectId, Model.ListOfSubject, new { @class = "form-control", @style = "margin-left:51px;" })<br />
+                                </div>
+                                <div class="col-sm-3">
+                                </div>
+                            </div>
+                            <div class="form-group" style="text-align: center">
+                                <button type="submit" class="btn btn-success mr-5">Select</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+

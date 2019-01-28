@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ExamOnline.Data;
 using ExamOnline.Models;
 using ExamOnline.Services;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamOnline.Repositories
@@ -32,9 +33,28 @@ namespace ExamOnline.Repositories
             Db.SaveChanges();
         }
 
+        public IEnumerable<SelectListItem> GetAll()
+        {
+            var subjects = Db.Subject.Select(s => new SelectListItem
+            {
+                Text = s.SubjectName,
+                Value = s.SubjectId.ToString()
+
+            });
+
+            return subjects;
+        }
+
         public Subject GetSubject(int? Id)
         {
-            return Db.Subject.Find(Id);
+            var subject = Db.Subject.Where(s => s.SubjectId == Id).Select(s => new Subject
+            {
+                SubjectId = s.SubjectId,
+                SubjectName = s.SubjectName,
+                SubjectCode = s.SubjectCode
+            }).FirstOrDefault();
+
+            return subject;
         }
 
         public void Remove(int? Id)

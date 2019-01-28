@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using ExamOnline.Models;
 using ExamOnline.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExamOnline.Controllers
 {
+    [Authorize]
     public class SubjectController : Controller
     {
         private readonly ISubject _Subject;

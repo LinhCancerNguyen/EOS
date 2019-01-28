@@ -54,7 +54,7 @@ namespace ExamOnline
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
                 .AddSessionStateTempDataProvider();
 
-            var connection = @"Server=DESKTOP-IPHJJVN;Database=EosExam;Trusted_Connection=True;user id=sa;password=123456;";
+            var connection = @"Server=V00288;Database=EosExam;Trusted_Connection=True;user id=sa;password=Cancer2306;";
             services.AddDbContext<ExamDBContext>
                 (options => options.UseSqlServer(connection));
 

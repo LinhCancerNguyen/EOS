@@ -1,0 +1,116 @@
+﻿@model IQueryable<ExamOnline.Models.Question>
+
+@{
+    int count = 1, countRight = 0;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 stretch-card">
+            <div class="card">
+                <div class="card-body row" style="border:2px dashed #cecaca; border-radius: 10px">
+                    <div class="col-md-4">
+                        <p><strong>Welcome: </strong> @ViewData["User"]</p>
+                    </div>
+                    <div class="col-md-5">
+                        <p><strong>Subject:</strong> @ViewData["Subject"]</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p><strong>Time: </strong><label id="timer"></label></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-panel">
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var question in Model)
+                        {
+                            <div class="card-body">
+                                <div class="Question" style="padding: 2%;">
+                                    <span class="card-title"> @string.Format("{0}{1}.", "Q", count)</span>
+                                    <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.QuestionId</span>
+                                    <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.QuestionContent</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" style="padding-left: 75px;">
+                                        <div class="form-group">
+                                            @foreach (var option in question.Options)
+                                            {
+                                                <label class="radio-inline">
+                                                    <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countRight)" value="@option.OptionContent"> @option.OptionContent
+                                                </label><br />
+                                                countRight++;
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
+                                </div>
+                            </div>
+                            count++;
+                        }
+                        <span id="countQuections" style="display:none;">@count</span>
+                        <button id="SubmitQuiz" type="submit" class="btn btn-success mr-3" style="text-align:center"><span class="glyphicon glyphicon-ok"></span>Submit Quiz</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section MyScritps {
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $('#SubmitQuiz').click(function () {
+                var sel = $('#countQuections').text();
+                console.log(sel);
+                var resultQuiz = [], countQuestion = parseInt(sel), question = {}, j = 1;
+                for (var i = 1; i < countQuestion; i++) {
+                    question = {
+                        QuestionID: $('#ID_Q'+ i).text(),
+                        QuestionText: $('#Q' + i).text(),
+                        AnswerQ: $('input[name=inlineRadioOptions' + i + ']:checked').val()
+                    }
+                    resultQuiz.push(question);
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("QuizTest", "Home")',
+                    data: { resultQuiz },
+                    success: function (response) {
+                        if (response.result.length > 0)
+                        {
+                            for(var i = 0; i <response.result.length; i++ )
+                            {
+                                if(response.result[i].IsCorrect == true)
+                                {
+                                    $('#AnsQ' + j).html('<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Correct answer</div>');
+                                }
+                                else
+                                {
+                                    $('#AnsQ' + j).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Incorrect answer - The Good Answer is <b>' + response.result[i].AnswerQ + '</b></div>');
+                                }
+                                j++;
+                            }
+                        }
+                        else
+                        {
+                            alert("Something Wrong");
+                        }
+                        console.log(response.result.length);
+                    },
+                    error: function (response) {
+                    }
+                });
+                console.log(resultQuiz);
+            });
+        });
+    </script>
+}
+

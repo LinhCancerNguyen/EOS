@@ -2,11 +2,74 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExamOnline.Data;
+using ExamOnline.Models;
 using ExamOnline.Services;
 
 namespace ExamOnline.Repositories
 {
-    public class QuestionRepository: IQuestion
+    public class QuestionRepository : IQuestion
     {
+        private ExamDBContext Db = null;
+
+        public QuestionRepository(ExamDBContext _Db)
+        {
+            Db = _Db;
+        }
+
+        public void Add(Question _Question)
+        {
+            Db.Question.Add(_Question);
+            Db.SaveChanges();
+        }
+
+        public IEnumerable<Question> GetQuestion()
+        {
+            IQueryable<Question> questions = Db.Question
+                   .Select(q => new Question
+                   {
+                       QuestionId = q.QuestionId,
+                       QuestionContent = q.QuestionContent,
+                       SubjectId = q.SubjectId,
+                       Subject = Db.Subject.Where(s => s.SubjectId == q.SubjectId)
+                       .Select(s => new Subject
+                       {
+                           SubjectId = s.SubjectId,
+                           SubjectName = s.SubjectName,
+                           SubjectCode = s.SubjectCode
+                       }).First(),
+                       Options = q.Options.Select(o => new Option
+                       {
+                           OptionId = o.OptionId,
+                           OptionContent = o.OptionContent
+                       }).ToList(),
+                       Answers = Db.Answer.Where(a => a.QuestionID == q.QuestionId)
+                       .Select(a => new Answer
+                       {
+                           AnswerId = a.AnswerId,
+                           AnswerContent = a.AnswerContent,
+                           QuestionID = a.QuestionID,
+                           Question = q
+                       }).ToList()
+                   }).AsQueryable();
+            return questions;
+        }
+
+        public IQueryable<Question> GetQuestionBySubjectName(string SubjectName)
+        {
+            IQueryable<Question> questions = Db.Question.Where(q => q.Subject.SubjectName == SubjectName)
+                   .Select(q => new Question
+                   {
+                       QuestionId = q.QuestionId,
+                       QuestionContent = q.QuestionContent,
+                       Options = q.Options.Select(o => new Option
+                       {
+                           OptionId = o.OptionId,
+                           OptionContent = o.OptionContent
+                       }).ToList()
+
+                   }).AsQueryable();
+            return questions;
+        }
     }
 }

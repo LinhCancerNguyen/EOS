@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
+using System;
+using ExamOnline.ModelsView;
 
 namespace ExamOnline.Controllers
 {
@@ -17,13 +19,17 @@ namespace ExamOnline.Controllers
     {
         private readonly IUser _User;
         private readonly ISubject _Subject;
+        private readonly IQuestion _Question;
+        private readonly IAnswer _Answer;
         const string SessionUser = "_User";
         const string SessionSubject = "_Subject";
 
-        public HomeController(IUser _IUser, ISubject _ISubject)
+        public HomeController(IUser _IUser, ISubject _ISubject, IQuestion _IQuestion, IAnswer _IAnswer)
         {
             _User = _IUser;
             _Subject = _ISubject;
+            _Question = _IQuestion;
+            _Answer = _IAnswer;
         }
 
         [HttpGet]
@@ -95,67 +101,56 @@ namespace ExamOnline.Controllers
         public IActionResult SelectSubject()
         {
             ViewData["User"] = HttpContext.Session.GetString(SessionUser);
-            return View(_Subject.All);
+            Subject subject = new Subject();
+            subject.ListOfSubject = _Subject.GetAll();
+
+            return View(subject);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult SelectSubject(Subject model)
         {
             Subject SubjectSelected = _Subject.GetSubject(model.SubjectId);
             if (SubjectSelected != null)
             {
+                HttpContext.Session.SetString(SessionSubject, SubjectSelected.SubjectName);
                 return RedirectToAction("QuizTest");
             }
 
             return View();
         }
-        /*
+
+        [Authorize]
         [HttpGet]
         public ActionResult QuizTest()
         {
-            IQueryable<Subject> questions = null;
+            ViewData["User"] = HttpContext.Session.GetString(SessionUser);
+            ViewData["Subject"] = HttpContext.Session.GetString(SessionSubject);
+            IQueryable<Question> questions = null;
 
-            if (quizSelected != null)
+            if (ViewData["Subject"] != null)
             {
-                questions = dbContext.Questions.Where(q => q.Quiz.QuizID == quizSelected.QuizID)
-                   .Select(q => new QuestionVM
-                   {
-                       QuestionID = q.QuestionID,
-                       QuestionText = q.QuestionText,
-                       Choices = q.Choices.Select(c => new ChoiceVM
-                       {
-                           ChoiceID = c.ChoiceID,
-                           ChoiceText = c.ChoiceText
-                       }).ToList()
-
-                   }).AsQueryable();
-
-
+                questions = _Question.GetQuestionBySubjectName(HttpContext.Session.GetString(SessionSubject));
             }
 
             return View(questions);
         }
 
+        [Authorize]
         [HttpPost]
-        public ActionResult QuizTest(List<QuizAnswersVM> resultQuiz)
+        public ActionResult QuizTest(List<QuizAnswerVM> resultQuiz)
         {
-            List<QuizAnswersVM> finalResultQuiz = new List<viewModels.QuizAnswersVM>();
+            List<QuizAnswerVM> finalResultQuiz = new List<QuizAnswerVM>();
 
-            foreach (QuizAnswersVM answser in resultQuiz)
+            foreach (QuizAnswerVM answser in resultQuiz)
             {
-                QuizAnswersVM result = dbContext.Answers.Where(a => a.QuestionID == answser.QuestionID).Select(a => new QuizAnswersVM
-                {
-                    QuestionID = a.QuestionID.Value,
-                    AnswerQ = a.AnswerText,
-                    isCorrect = (answser.AnswerQ.ToLower().Equals(a.AnswerText.ToLower()))
-
-                }).FirstOrDefault();
+                QuizAnswerVM result = _Answer.GetAnswerByYourAnswer(answser);
 
                 finalResultQuiz.Add(result);
             }
 
-            return Json(new { result = finalResultQuiz }, JsonRequestBehavior.AllowGet);
+            return Json(new { result = finalResultQuiz });
         }
-        */
     }
 }

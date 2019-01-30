@@ -1,0 +1,35 @@
+﻿@model ExamOnline.Models.Option
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-12 stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Question.QuestionContent)</td>
+                            <td>@Html.DisplayFor(model => model.Question.QuestionContent)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.OptionContent)</td>
+                            <td>@Html.DisplayFor(model => model.OptionContent)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <form asp-action="Delete">
+                    <div class="form-group">
+                        <input type="hidden" asp-for="OptionId" />
+                        <button type="submit" class="btn btn-danger mr-2">Delete</button>
+                        <button asp-action="Index" class="btn btn-light">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

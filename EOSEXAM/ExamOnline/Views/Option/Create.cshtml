@@ -1,0 +1,35 @@
+﻿@model ExamOnline.Models.Option
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <form class="forms-sample" asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group row">
+                        <label asp-for="QuestionID" class="col-sm-3 col-form-label">Question</label>
+                        <div class="col-sm-9">
+                            <select type="text" class="form-control" id="exampleInputEmail2" asp-for="QuestionID" asp-items="@(new SelectList(ViewBag.ListOfQuestion, "QuestionID", "QuestionContent"))"></select>
+                            <span asp-validation-for="QuestionID" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="OptionContent" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Name" asp-for="OptionContent">
+                            <span asp-validation-for="OptionContent" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success mr-2">Create</button>
+                        <button asp-controller="Question" asp-action="Index" class="btn btn-light">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

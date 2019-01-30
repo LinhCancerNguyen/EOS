@@ -26,24 +26,40 @@
                         <tr>
                             <td>@Html.DisplayFor(modelItem => item.Subject.SubjectName)</td>
                             <td>@Html.DisplayFor(modelItem => item.QuestionContent)</td>
-                            <td>@foreach (var o in item.Options) {
-                                <ul>
-                                    @o.OptionContent
-                                </ul>
-                            }</td>
                             <td>
+                                <p>
+                                    <a asp-controller="Option" asp-action="Create"><label class="badge badge-info">Add</label></a>
+                                </p>
+                                @foreach (var o in item.Options)
+                                {
+                                <ul>
+                                    <lable>@o.OptionContent</lable>
+                                    <a asp-controller="Option" asp-action="Edit" asp-route-id="@o.OptionId"><label class="badge badge-warning">Edit</label></a>
+                                    <a asp-controller="Option" asp-action="Delete" asp-route-id="@o.OptionId"><label class="badge badge-danger">Delete</label></a>
+                                </ul>
+                                }
+                            </td>
+                            <td>
+                                @if (item.Answers.Count == 0)
+                                {
+                                    <p>
+                                        <a asp-controller="Answer" asp-action="Create"><label class="badge badge-info">Add</label></a>
+                                    </p>
+                                }
                                 @foreach (var a in item.Answers)
                                 {
                                     <ul>
-                                        @a.AnswerContent
+                                        <lable>@a.AnswerContent</lable>
+                                        <a asp-controller="Answer" asp-action="Edit" asp-route-id="@a.AnswerId"><label class="badge badge-warning">Edit</label></a>
+                                        <a asp-controller="Answer" asp-action="Delete" asp-route-id="@a.AnswerId"><label class="badge badge-danger">Delete</label></a>
                                     </ul>
                                 }
-                                                    </td>
-                            <td>
-                                <a asp-controller="Question" asp-action="Edit" asp-route-id="@item.QuestionId"><label class="badge badge-warning">Edit</label></a>
                             </td>
                             <td>
-                                <a asp-controller="Question" asp-action="Delete" asp-route-id="@item.QuestionId"><label class="badge badge-danger">Delete</label></a>
+                                <a asp-controller="Question" asp-action="Edit" asp-route-id="@item.QuestionID"><label class="badge badge-warning">Edit</label></a>
+                            </td>
+                            <td>
+                                <a asp-controller="Question" asp-action="Delete" asp-route-id="@item.QuestionID"><label class="badge badge-danger">Delete</label></a>
                             </td>
                         </tr>
                         }

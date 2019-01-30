@@ -66,7 +66,7 @@ using ExamOnline.Models;
             WriteLiteral("\r\n<div class=\"col-12 stretch-card\">\r\n    <div class=\"card\">\r\n        <div class=\"card-body\">\r\n            <div class=\"table-responsive\">\r\n                <p>\r\n                    ");
             EndContext();
             BeginContext(284, 59, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "59dfe3bb8f944c8f9e81fbd920d652ed", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6cdcb326bfa34e3aa58800cd6849b31b", async() => {
                 BeginContext(329, 10, true);
                 WriteLiteral("Create New");
                 EndContext();
@@ -159,7 +159,7 @@ using ExamOnline.Models;
             WriteLiteral("</td>\r\n                                <td>\r\n                                    ");
             EndContext();
             BeginContext(1357, 122, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f17cbcd8cedd47679d36d838ee580660", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "426b44b6ee05406083ed78d6a6cce062", async() => {
                 BeginContext(1428, 47, true);
                 WriteLiteral("<label class=\"badge badge-warning\">Edit</label>");
                 EndContext();
@@ -196,7 +196,7 @@ using ExamOnline.Models;
             WriteLiteral("\r\n                                </td>\r\n                                <td>\r\n                                    ");
             EndContext();
             BeginContext(1594, 125, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "54341a52fe2743ae955c78546f4e8705", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "536c422f16874dcb9875e30205c5b281", async() => {
                 BeginContext(1667, 48, true);
                 WriteLiteral("<label class=\"badge badge-danger\">Delete</label>");
                 EndContext();

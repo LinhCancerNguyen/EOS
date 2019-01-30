@@ -79,3 +79,15 @@ D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Home\SelectSubject
 D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Home\QuizTest.g.cshtml.cs
 D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Question\Index.g.cshtml.cs
 D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Question\Create.g.cshtml.cs
+D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Question\Delete.g.cshtml.cs
+D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Question\Edit.g.cshtml.cs
+D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Option\Create.g.cshtml.cs
+D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Answer\Create.g.cshtml.cs
+D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Answer\Index.g.cshtml.cs
+D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Option\Index.g.cshtml.cs
+D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Option\Delete.g.cshtml.cs
+D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Option\Edit.g.cshtml.cs
+D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Answer\Delete.g.cshtml.cs
+D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Answer\Edit.g.cshtml.cs
+D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\Razor\Views\Admin\Login.g.cshtml.cs
+D:\EOS\EOSEXAM\ExamOnline\obj\Debug\netcoreapp2.1\ExamOnline.csprojAssemblyReference.cache

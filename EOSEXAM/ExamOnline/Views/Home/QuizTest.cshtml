@@ -22,7 +22,15 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12 stretch-card">
+            <div class="card">
+                <div class="card-body" id="score" style="font-family:'Courier New'">
 
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="main-panel">
         <div class="row">
             <div class="col-lg-12 grid-margin stretch-card">
@@ -34,7 +42,7 @@
                             <div class="card-body">
                                 <div class="Question" style="padding: 2%;">
                                     <span class="card-title"> @string.Format("{0}{1}.", "Q", count)</span>
-                                    <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.QuestionId</span>
+                                    <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.QuestionID</span>
                                     <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.QuestionContent</p>
                                 </div>
                                 <div class="row">
@@ -50,6 +58,10 @@
                                         </div>
                                     </div>
                                 </div>
+                                @foreach (var answer in question.Answers)
+                                {
+                                    <input type="hidden" name="@string.Format("{0}{1}", "inlineAnswers",count)" id="@string.Format("{0}{1}", "inlineAnswer", countRight)" value="@answer.AnswerContent">
+                                }
                                 <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
                                 </div>
                             </div>
@@ -61,56 +73,64 @@
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
-@section MyScritps {
+@section scripts{
+    <script type='text/javascript'>
+        var start = new Date();
+        setInterval(function () {
+            // check time elapsed given target time of 10 mins from now
+            var timeLeft = (60000 - (new Date() - start)) / 1000;
+            // update timer
+            document.getElementById('timer').innerHTML = Math.floor(timeLeft / 60) + ":" + Math.floor(timeLeft % 60);
+
+            // check if timer has elapsed, and submit form
+            if (timeLeft <= 0) {
+                clearInterval();
+                document.getElementById('timer').innerHTML = '<strong style="color:red">0:0</strong>';
+                document.getElementById("SubmitQuiz").disabled = true;
+            }
+        }, 1000);
+    </script>
     <script type="text/javascript">
-    $(document).ready(function () {
-        $('#SubmitQuiz').click(function () {
-                var sel = $('#countQuections').text();
-                console.log(sel);
-                var resultQuiz = [], countQuestion = parseInt(sel), question = {}, j = 1;
-                for (var i = 1; i < countQuestion; i++) {
-                    question = {
-                        QuestionID: $('#ID_Q'+ i).text(),
-                        QuestionText: $('#Q' + i).text(),
-                        AnswerQ: $('input[name=inlineRadioOptions' + i + ']:checked').val()
-                    }
-                    resultQuiz.push(question);
+        $(document).ready(function submitQuiz() {
+            $("#SubmitQuiz").click(function () {
+                var n = $('#countQuections').text() - 1;
+                var countQuestion = parseInt(n);
+                var yourAnswer = [];
+                var j = 1;
+                var right = 0;
+                var correctAnswer = [];
+                for (var i = 1; i <= countQuestion; i++) {
+                    var answer = $('input[name=inlineRadioOptions' + i + ']:checked').val();
+                    yourAnswer.push(answer);
                 }
-                $.ajax({
-                    type: 'POST',
-                    url: '@Url.Action("QuizTest", "Home")',
-                    data: { resultQuiz },
-                    success: function (response) {
-                        if (response.result.length > 0)
-                        {
-                            for(var i = 0; i <response.result.length; i++ )
-                            {
-                                if(response.result[i].IsCorrect == true)
-                                {
-                                    $('#AnsQ' + j).html('<div class="alert alert-success" role="alert"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Correct answer</div>');
-                                }
-                                else
-                                {
-                                    $('#AnsQ' + j).html('<div class="alert alert-danger" role="alert"> <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span> Incorrect answer - The Good Answer is <b>' + response.result[i].AnswerQ + '</b></div>');
-                                }
-                                j++;
-                            }
-                        }
-                        else
-                        {
-                            alert("Something Wrong");
-                        }
-                        console.log(response.result.length);
-                    },
-                    error: function (response) {
+                for (var i = 1; i <= countQuestion; i++) {
+                    var answer = $('input[name=inlineAnswers' + i + ']:').val();
+                    correctAnswer.push(answer);
+                }
+                console.log(yourAnswer);
+                console.log(correctAnswer);
+                for (var i = 0; i < countQuestion; i++) {
+                    if (yourAnswer[i] == correctAnswer[i]) {
+                        $('#AnsQ' + j).html('<p class="alert-success">Correct answer</p>');
+                        right++;
+                    } else {
+                        $('#AnsQ' + j).html('<p class="alert-danger">Incorrect answer<p>');
                     }
-                });
-                console.log(resultQuiz);
+                    j++;
+                }
+                var score = (right / countQuestion) * 10;
+                $('#score').html('<h3 style="text-align:center"> Your Score: ' + score + '/10</h3>');
+                document.getElementById("SubmitQuiz").disabled = true;
             });
         });
     </script>
 }
+
+
+
+
 

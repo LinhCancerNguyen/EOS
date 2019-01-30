@@ -9,7 +9,7 @@ namespace ExamOnline.Models
     {
         public int AnswerId { get; set; }
         public string AnswerContent { get; set; }
-        public Nullable<int> QuestionID { get; set; }
+        public int QuestionID { get; set; }
         public virtual Question Question { get; set; }
     }
 }

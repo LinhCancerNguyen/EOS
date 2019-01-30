@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System;
 using ExamOnline.ModelsView;
+using Newtonsoft.Json;
 
 namespace ExamOnline.Controllers
 {
@@ -46,10 +47,6 @@ namespace ExamOnline.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (User.Identity.IsAuthenticated)
-                {
-                    return RedirectToLocal(returnUrl, model);
-                }
                 var user = _User.Login(model.UserName, model.Password);
                 if (user != null)
                 {
@@ -86,14 +83,7 @@ namespace ExamOnline.Controllers
 
         private IActionResult RedirectToLocal(string returnUrl, User model)
         {
-            if(model.RoleId.Equals(1))
-            {
-                return RedirectToAction("Index", "Admin");
-            }
-            else
-            {
                 return RedirectToAction("SelectSubject", "Home");
-            }
         }
 
         [Authorize]
@@ -129,28 +119,12 @@ namespace ExamOnline.Controllers
             ViewData["Subject"] = HttpContext.Session.GetString(SessionSubject);
             IQueryable<Question> questions = null;
 
-            if (ViewData["Subject"] != null)
+            if (ViewData["Subject"] != null && ViewData["User"] != null)
             {
-                questions = _Question.GetQuestionBySubjectName(HttpContext.Session.GetString(SessionSubject));
+                questions = _Question.GetQuestionBySubjectName(HttpContext.Session.GetString(SessionSubject)).Skip(1).Take(5);
             }
 
             return View(questions);
-        }
-
-        [Authorize]
-        [HttpPost]
-        public ActionResult QuizTest(List<QuizAnswerVM> resultQuiz)
-        {
-            List<QuizAnswerVM> finalResultQuiz = new List<QuizAnswerVM>();
-
-            foreach (QuizAnswerVM answser in resultQuiz)
-            {
-                QuizAnswerVM result = _Answer.GetAnswerByYourAnswer(answser);
-
-                finalResultQuiz.Add(result);
-            }
-
-            return Json(new { result = finalResultQuiz });
         }
     }
 }

@@ -12,9 +12,9 @@ namespace ExamOnline.Models
             this.Answers = new HashSet<Answer>();
             this.Options = new HashSet<Option>();
         }
-        public int QuestionId { get; set; }
+        public int QuestionID { get; set; }
         public string QuestionContent { get; set; }
-        public Nullable<int> SubjectId { get; set; }
+        public int SubjectId { get; set; }
 
         public Subject Subject { get; set; }
         public virtual ICollection<Answer> Answers { get; set; }

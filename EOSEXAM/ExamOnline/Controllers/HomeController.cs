@@ -9,9 +9,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
-using System;
 using ExamOnline.ModelsView;
-using Newtonsoft.Json;
+using System;
 
 namespace ExamOnline.Controllers
 {
@@ -24,6 +23,7 @@ namespace ExamOnline.Controllers
         private readonly IAnswer _Answer;
         const string SessionUser = "_User";
         const string SessionSubject = "_Subject";
+        const string NumberQuestion = "_Number";
 
         public HomeController(IUser _IUser, ISubject _ISubject, IQuestion _IQuestion, IAnswer _IAnswer)
         {
@@ -91,20 +91,28 @@ namespace ExamOnline.Controllers
         public IActionResult SelectSubject()
         {
             ViewData["User"] = HttpContext.Session.GetString(SessionUser);
-            Subject subject = new Subject();
-            subject.ListOfSubject = _Subject.GetAll();
-
-            return View(subject);
+            SubjectVM subject = new SubjectVM();
+            if (ViewData["User"] != null)
+            {
+                subject.ListOfSubject = _Subject.GetAll();
+                return View(subject);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            
         }
 
         [Authorize]
         [HttpPost]
-        public ActionResult SelectSubject(Subject model)
+        public ActionResult SelectSubject(SubjectVM model)
         {
             Subject SubjectSelected = _Subject.GetSubject(model.SubjectId);
             if (SubjectSelected != null)
             {
                 HttpContext.Session.SetString(SessionSubject, SubjectSelected.SubjectName);
+                HttpContext.Session.SetString(NumberQuestion, model.NumberOfQuestion.ToString());
                 return RedirectToAction("QuizTest");
             }
 
@@ -117,14 +125,35 @@ namespace ExamOnline.Controllers
         {
             ViewData["User"] = HttpContext.Session.GetString(SessionUser);
             ViewData["Subject"] = HttpContext.Session.GetString(SessionSubject);
-            IQueryable<Question> questions = null;
+            int n = int.Parse(HttpContext.Session.GetString(NumberQuestion));
+            Random rd = new Random();
+            int randomSkip = rd.Next(0, 3);
+            IQueryable<Question> questions = _Question.GetQuestionBySubjectName(HttpContext.Session.GetString(SessionSubject)).Skip(randomSkip).Take(n);
 
             if (ViewData["Subject"] != null && ViewData["User"] != null)
             {
-                questions = _Question.GetQuestionBySubjectName(HttpContext.Session.GetString(SessionSubject)).Skip(1).Take(5);
+                return View(questions);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            
+        }
+
+        [HttpPost]
+        public ActionResult QuizTest(List<QuizAnswerVM> resultQuiz)
+        {
+            List<QuizAnswerVM> finalResultQuiz = new List<QuizAnswerVM>();
+
+            foreach (QuizAnswerVM answser in resultQuiz)
+            {
+                QuizAnswerVM result = _Answer.GetAnswerByYourAnswer(answser);
+                finalResultQuiz.Add(result);
             }
 
-            return View(questions);
+            return Json(new { result = finalResultQuiz });
         }
+
     }
 }

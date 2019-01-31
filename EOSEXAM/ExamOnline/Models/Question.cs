@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +14,8 @@ namespace ExamOnline.Models
             this.Options = new HashSet<Option>();
         }
         public int QuestionID { get; set; }
+        [Required]
+        [Display(Name = "Question")]
         public string QuestionContent { get; set; }
         public int SubjectId { get; set; }
 

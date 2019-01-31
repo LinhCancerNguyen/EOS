@@ -1,7 +1,7 @@
 ﻿@model IQueryable<ExamOnline.Models.Question>
 
 @{
-    int count = 1, countRight = 0;
+    int count = 0, countRight = 0;
 }
 
 <div class="container">
@@ -58,10 +58,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                @foreach (var answer in question.Answers)
-                                {
-                                    <input type="hidden" name="@string.Format("{0}{1}", "inlineAnswers",count)" id="@string.Format("{0}{1}", "inlineAnswer", countRight)" value="@answer.AnswerContent">
-                                }
                                 <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
                                 </div>
                             </div>
@@ -80,53 +76,63 @@
 @section scripts{
     <script type='text/javascript'>
         var start = new Date();
-        setInterval(function () {
-            // check time elapsed given target time of 10 mins from now
+        t = setInterval(function () {
             var timeLeft = (60000 - (new Date() - start)) / 1000;
-            // update timer
             document.getElementById('timer').innerHTML = Math.floor(timeLeft / 60) + ":" + Math.floor(timeLeft % 60);
-
-            // check if timer has elapsed, and submit form
             if (timeLeft <= 0) {
                 clearInterval();
                 document.getElementById('timer').innerHTML = '<strong style="color:red">0:0</strong>';
-                document.getElementById("SubmitQuiz").disabled = true;
+                Submit();
             }
         }, 1000);
-    </script>
-    <script type="text/javascript">
-        $(document).ready(function submitQuiz() {
-            $("#SubmitQuiz").click(function () {
-                var n = $('#countQuections').text() - 1;
-                var countQuestion = parseInt(n);
-                var yourAnswer = [];
-                var j = 1;
-                var right = 0;
-                var correctAnswer = [];
-                for (var i = 1; i <= countQuestion; i++) {
-                    var answer = $('input[name=inlineRadioOptions' + i + ']:checked').val();
-                    yourAnswer.push(answer);
-                }
-                for (var i = 1; i <= countQuestion; i++) {
-                    var answer = $('input[name=inlineAnswers' + i + ']:').val();
-                    correctAnswer.push(answer);
-                }
-                console.log(yourAnswer);
-                console.log(correctAnswer);
-                for (var i = 0; i < countQuestion; i++) {
-                    if (yourAnswer[i] == correctAnswer[i]) {
-                        $('#AnsQ' + j).html('<p class="alert-success">Correct answer</p>');
-                        right++;
-                    } else {
-                        $('#AnsQ' + j).html('<p class="alert-danger">Incorrect answer<p>');
-                    }
-                    j++;
-                }
-                var score = (right / countQuestion) * 10;
-                $('#score').html('<h3 style="text-align:center"> Your Score: ' + score + '/10</h3>');
-                document.getElementById("SubmitQuiz").disabled = true;
+
+        $(document).ready(function (){
+            $('#SubmitQuiz').click(function () {
+                Submit();
+                
             });
         });
+
+        function Submit() {
+        var right = 0;
+                var n = $('#countQuections').text();
+                var resultQuiz = [], countQuestion = parseInt(n), question = {}, j = 0;
+                for (var i = 0; i < countQuestion; i++) {
+                    question = {
+                        QuestionId: $('#ID_Q'+ i).text(),
+                        QuestionContent: $('#Q' + i).text(),
+                        YourAnswer: $('input[name=inlineRadioOptions' + i + ']:checked').val(),
+                        IsCorrect: false
+                    }
+                    resultQuiz.push(question);
+                }
+                console.log(resultQuiz);
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("QuizTest", "Home")',
+                    data: { resultQuiz },
+                    success: function (response) {
+                        //console.log(response.result);
+                        for (var i = 0; i < countQuestion; i++) {
+                                console.log(response.result[i].questionContent);
+                                if (response.result[i].isCorrect == true) {
+                                    $('#AnsQ' + j).html('<p class="alert-success">Correct answer</p>');
+                                    right++;
+                                }
+                                else {
+                                    $('#AnsQ' + j).html('<p class="alert-danger">Incorrect answer<p>');
+                                }
+                                j++;
+                            }
+                        var score = (right / countQuestion) * 10;
+                        $('#score').html('<h3 style="text-align:center"> Your Score: ' + score + '/10</h3>');
+                        document.getElementById("SubmitQuiz").disabled = true;
+                        clearInterval(t);
+                    },
+                    error: function (response) {
+                    }
+                });
+        }
     </script>
 }
 

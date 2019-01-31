@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExamOnline.Models;
+using ExamOnline.ModelsView;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace ExamOnline.Services
@@ -15,5 +16,6 @@ namespace ExamOnline.Services
         void Remove(int? Id);
         void Edit(Subject _Subject);
         IEnumerable<SelectListItem> GetAll();
+        IEnumerable<SubjectVM> GetAllSubject();
     }
 }

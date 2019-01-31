@@ -62,11 +62,11 @@ namespace ExamOnline.Repositories
 
         public QuizAnswerVM GetAnswerByYourAnswer(QuizAnswerVM QuizAnswerVM)
         {
-            QuizAnswerVM result = Db.Answer.Where(a => a.AnswerContent == QuizAnswerVM.YourAnswer).Select(a => new QuizAnswerVM
+            QuizAnswerVM result = Db.Answer.Where(a => a.QuestionID == QuizAnswerVM.QuestionId).Select(a => new QuizAnswerVM
             {
                 QuestionId = a.QuestionID,
-                QuestionContent = a.AnswerContent,
-                YourAnswer = a.AnswerContent,
+                QuestionContent = QuizAnswerVM.QuestionContent,
+                YourAnswer = QuizAnswerVM.YourAnswer,
                 IsCorrect = (QuizAnswerVM.YourAnswer.ToLower().Equals(a.AnswerContent.ToLower()))
 
             }).FirstOrDefault();

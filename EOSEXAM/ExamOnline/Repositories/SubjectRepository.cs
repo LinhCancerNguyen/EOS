@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ExamOnline.Data;
 using ExamOnline.Models;
+using ExamOnline.ModelsView;
 using ExamOnline.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,16 @@ namespace ExamOnline.Repositories
 
             });
 
+            return subjects;
+        }
+
+        public IEnumerable<SubjectVM> GetAllSubject()
+        {
+            var subjects = Db.Subject.Select(s => new SubjectVM
+            {
+                SubjectId = s.SubjectId,
+                SubjectName = s.SubjectName
+            });
             return subjects;
         }
 

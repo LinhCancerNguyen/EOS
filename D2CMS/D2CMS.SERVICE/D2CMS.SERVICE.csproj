@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\D2CMS.CORE\D2CMS.CORE.csproj" />
+    <ProjectReference Include="..\D2CMS.INFRA\D2CMS.INFRA.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -60,7 +60,7 @@ namespace ExamOnline.Repositories
                            QuestionID = a.QuestionID,
                            Question = q
                        }).ToList()
-                   }).AsQueryable();
+                   }).OrderByDescending(c => c.QuestionID).AsQueryable();
             return questions;
         }
 

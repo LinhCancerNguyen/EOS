@@ -17,10 +17,13 @@ namespace ExamOnline.Controllers
     {
         private readonly IUser _User;
 
+        
         public AdminController(IUser _IUser)
         {
             _User = _IUser;
-        } 
+        }
+
+        [Authorize]
         public IActionResult Index()
         {
             return View();
@@ -52,7 +55,7 @@ namespace ExamOnline.Controllers
                     var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                     var principal = new ClaimsPrincipal(identity);
                     await HttpContext.SignInAsync(principal);
-                    return RedirectToLocal(returnUrl);
+                    return RedirectToAction("Index", "Admin");
                 }
                 else
                 {

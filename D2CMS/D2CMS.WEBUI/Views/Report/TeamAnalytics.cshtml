@@ -1,0 +1,161 @@
+﻿@model D2CMS.WEBUI.Models.TeamReportResponse
+@{
+    ViewData["Title"] = "TeamReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-title">
+    <h3 class="breadcrumb-header">Report</h3>
+</div>
+<div id="main-wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-white">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title">Team report on: @Model.TargetDate.ToString("yyyy/MM")</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive invoice-table">
+                        <table class="table table-bordered" id="report-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th class="">Study</th>
+                                    <th class="">Docs</th>
+                                    <th class="">Coding</th>
+                                    <th class="">Test-Code</th>
+                                    <th class="">Fix-bug</th>
+                                    <th class="">Test-Bug</th>
+                                    <th class="">Training</th>
+                                    <th class="">Comm</th>
+                                    <th class="">Manage</th>
+                                    <th class="">Meeting</th>
+                                    <th class="">Reviewing</th>
+                                    <th class="">Others</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (var i = 1; i <= DateTime.DaysInMonth(Model.TargetDate.Year, Model.TargetDate.Month); i++)
+                                {
+                                var reportDate = new DateTime(Model.TargetDate.Year, Model.TargetDate.Month, i);
+                                var colClass = "workday";
+                                if ((reportDate.DayOfWeek == DayOfWeek.Saturday) || (reportDate.DayOfWeek == DayOfWeek.Sunday))
+                                {
+                                colClass = "holiday";
+                                }
+                                <text>
+                                    <tr>
+                                        <td class="@colClass">@reportDate.ToString("yyyy/MM/dd")</td>
+                                        <td class="@colClass text-center">@Model.Reports.Where(r => r.ReportDate == reportDate).Sum(r => r.Study)</td>
+                                        <td class="@colClass text-center">@Model.Reports.Where(r => r.ReportDate == reportDate).Sum(r => r.Docs)</td>
+                                        <td class="@colClass text-center">@Model.Reports.Where(r => r.ReportDate == reportDate).Sum(r => r.Coding)</td>
+                                        <td class="@colClass text-center">@Model.Reports.Where(r => r.ReportDate == reportDate).Sum(r => r.TestCode)</td>
+                                        <td class="@colClass text-center">@Model.Reports.Where(r => r.ReportDate == reportDate).Sum(r => r.FixBug)</td>
+                                        <td class="@colClass text-center">@Model.Reports.Where(r => r.ReportDate == reportDate).Sum(r => r.TestBug)</td>
+                                        <td class="@colClass text-center">@Model.Reports.Where(r => r.ReportDate == reportDate).Sum(r => r.Training)</td>
+                                        <td class="@colClass text-center">@Model.Reports.Where(r => r.ReportDate == reportDate).Sum(r => r.Communication)</td>
+                                        <td class="@colClass text-center">@Model.Reports.Where(r => r.ReportDate == reportDate).Sum(r => r.Manage)</td>
+                                        <td class="@colClass text-center">@Model.Reports.Where(r => r.ReportDate == reportDate).Sum(r => r.Meeting)</td>
+                                        <td class="@colClass text-center">@Model.Reports.Where(r => r.ReportDate == reportDate).Sum(r => r.Reviewing)</td>
+                                        <td class="@colClass text-center">@Model.Reports.Where(r => r.ReportDate == reportDate).Sum(r => r.Others)</td>
+                                    </tr>
+                                </text>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- Row -->
+    <div class="row">
+        <div class="col-lg-6 col-md-6">
+            <div class="panel panel-white">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title">LogWork Charts</h4>
+                </div>
+                <div class="panel-body">
+                    <div id="logworkchart" style="height:400px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+            <div class="panel panel-white">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title">Projects</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="project-stats">
+                        <ul class="list-unstyled">
+                            <li>Alpha - Admin Template<span class="label label-default pull-right">85%</span></li>
+                            <li>Meteor - Landing Page<span class="label label-success pull-right">Finished</span></li>
+                            <li>Modern - Corporate Website<span class="label label-success pull-right">Finished</span></li>
+                            <li>Space - Admin Template<span class="label label-danger pull-right">Rejected</span></li>
+                            <li>Backend UI<span class="label label-default pull-right">27%</span></li>
+                            <li>Personal Blog<span class="label label-default pull-right">48%</span></li>
+                            <li>E-mail Templates<span class="label label-default pull-right">Pending</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div><!-- Row -->
+</div>
+@section Scripts {
+
+<script>
+    function labelFormatter(label, series) {
+        return "<div style='font-size:8pt; text-align:center; padding:2px; color:#2c2c2c;'>" + label + "<br/>" + Math.round(series.percent) + "%</div>";
+    }
+
+    $(function () {
+        var logworkData = [
+            { label: "Study", data: @Model.Reports.Sum(r => r.Study) },
+            { label: "Docs", data: @Model.Reports.Sum(r => r.Docs)  },
+            { label: "Coding", data: @Model.Reports.Sum(r => r.Coding)  },
+            { label: "TestCode", data: @Model.Reports.Sum(r => r.TestCode)  },
+            { label: "FixBug", data: @Model.Reports.Sum(r => r.FixBug)  },
+            { label: "TestBug", data: @Model.Reports.Sum(r => r.TestBug)  },
+            { label: "Training", data: @Model.Reports.Sum(r => r.Training)  },
+            { label: "Communication", data: @Model.Reports.Sum(r => r.Communication)  },
+            { label: "Manage", data: @Model.Reports.Sum(r => r.Manage)  },
+            { label: "Meeting", data: @Model.Reports.Sum(r => r.Meeting)  },
+            { label: "Reviewing", data: @Model.Reports.Sum(r => r.Reviewing)  },
+            { label: "Others", data: @Model.Reports.Sum(r => r.Others)  }
+        ];
+        $.plot('#logworkchart', logworkData, {
+            series: {
+                pie: {
+                    show: true,
+                    radius: 1,
+                    label: {
+                        show: true,
+                        radius: 4/5,
+                        formatter: labelFormatter,
+                        background: {
+                            opacity: 0.8
+                        }
+                    }
+                }
+            },
+            legend: {
+                show: true
+            }
+        });
+    });
+
+
+    $(document).ready(function () {
+        $('#report-table td.total').each(function () {
+            var sum = Number($(this).text());
+            if ($(this).hasClass("holiday")) {
+                return;
+            }
+            if (sum <= 0) {
+                $(this).addClass("txt-danger");
+            }
+        });
+    });
+</script>
+
+}

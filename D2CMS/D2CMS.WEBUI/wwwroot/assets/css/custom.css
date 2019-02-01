@@ -1,0 +1,17 @@
+.report-time {
+    width: 70px;
+}
+tr.holidays {
+    background-color: #fce4e4;
+}
+label.danger, .txt-danger {
+    color: red;
+}
+.totalcount {
+    height:32px;
+    padding: 5px 12px;
+    width:60px;
+}
+th.holiday, td.holiday {
+    background-color: #fad9d9;
+}

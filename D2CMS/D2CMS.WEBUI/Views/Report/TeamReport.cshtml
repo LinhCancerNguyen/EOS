@@ -1,0 +1,96 @@
+﻿@model D2CMS.WEBUI.Models.TeamReportResponse
+@{
+    ViewData["Title"] = "TeamReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-title">
+    <h3 class="breadcrumb-header">Report</h3>
+</div>
+<div id="main-wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-white">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title">Team report on: @Model.TargetDate.ToString("yyyy/MM")</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive invoice-table">
+                        <table class="table table-bordered" id="report-table">
+                            <thead>
+                                <tr>
+                                    <th>Account</th>
+                                    @for (var i = 1; i <= DateTime.DaysInMonth(Model.TargetDate.Year, Model.TargetDate.Month); i++)
+                                    {
+                                        var reportDate = new DateTime(Model.TargetDate.Year, Model.TargetDate.Month, i);
+                                        var colClass = "workday";
+                                        if ((reportDate.DayOfWeek == DayOfWeek.Saturday) || (reportDate.DayOfWeek == DayOfWeek.Sunday))
+                                        {
+                                            colClass = "holiday";
+                                        }
+                                        <text>
+                                            <th class="@colClass">@i.ToString("D2")</th>
+                                        </text>
+                                    }
+                                    <th>Sum</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var user in Model.Users)
+                                {
+                                    float sumwork = 0;
+                                    <text>
+                                        <tr>
+                                            <td>@user.Account</td>
+                                            @for (var i = 1; i <= DateTime.DaysInMonth(Model.TargetDate.Year, Model.TargetDate.Month); i++)
+                                            {
+                                                var item = Model.Reports.Where(r => r.UserId == user.Id && r.ReportDate.Year == Model.TargetDate.Year &&
+                                                r.ReportDate.Month == Model.TargetDate.Month && r.ReportDate.Day == i).FirstOrDefault();
+                                                float total = 0;
+                                                if (item != null)
+                                                {
+                                                    total = item.Study + item.Docs + item.Coding + item.TestCode + item.FixBug +
+                                                        item.TestBug + item.Training + item.Communication + item.Manage + item.Meeting + item.Reviewing + item.Others;
+                                                    sumwork += total;
+                                                }
+                                                var reportDate = new DateTime(Model.TargetDate.Year, Model.TargetDate.Month, i);
+                                                var colClass = "workday";
+                                                if ((reportDate.DayOfWeek == DayOfWeek.Saturday) || (reportDate.DayOfWeek == DayOfWeek.Sunday))
+                                                {
+                                                    colClass = "holiday";
+                                                }
+                                                <text>
+                                                <td class="@colClass text-center total">@total</td>
+                                    </text>
+                                }
+                                            <td>@sumwork</td>
+                                        </tr>
+                                        </text>
+
+                                    }
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- Row -->
+
+</div>
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            $('#report-table td.total').each(function () {
+                var sum = Number($(this).text());
+                if ($(this).hasClass("holiday")) {
+                    return;
+                }
+                if (sum <= 0) {
+                    $(this).addClass("txt-danger");
+                }
+            });
+        });
+    </script>
+
+}

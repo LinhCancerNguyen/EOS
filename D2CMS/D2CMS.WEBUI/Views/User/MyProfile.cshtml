@@ -1,0 +1,285 @@
+﻿@model D2CMS.CORE.Models.User
+@{
+    ViewData["Title"] = "MyProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="panel panel-white">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title">My Profile</h4>
+            </div>
+            <div class="panel-body user-profile-panel">
+                <img src="http://via.placeholder.com/100x100" class="user-profile-image img-circle" alt="">
+                <h4 class="text-center m-t-lg">@Model.Firstname @Model.Lastname</h4>
+                <p class="text-center">@Model.Account</p>
+                @*
+                    <hr>
+                    <ul class="list-unstyled text-center">
+                        <li>
+                            <p><i class="fa fa-map-marker m-r-xs"></i>Melbourne, Australia</p>
+                        </li>
+                        <li>
+                            <p><i class="fa fa-paper-plane-o m-r-xs"></i><a href="#">example@mail.com</a></p>
+                        </li>
+                        <li>
+                            <p><i class="fa fa-link m-r-xs"></i><a href="#">www.themeforest.net</a></p>
+                        </li>
+                    </ul>
+                    <hr>
+                    <button class="btn btn-info btn-block">Follow</button>*@
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-white">
+            <div class="panel-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">Code</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Code" value="@Model.Code">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">Account</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Account" value="@Model.Account">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">Firstname</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Firstname" value="@Model.Firstname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">Lastname</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Lastname" value="@Model.Lastname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">DepartmentId</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="DepartmentId" value="@Model.DepartmentId">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">TitleId</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="TitleId" value="@Model.TitleId">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">RoleId</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="RoleId" value="@Model.RoleId">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">Sex</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Sex" value="@Model.Sex">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">Dob</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Dob" value="@Model.Dob">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">PhoneNumber</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="PhoneNumber" value="@Model.PhoneNumber">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">IdCard</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="IdCard" value="@Model.IdCard">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">IdDate</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="IdDate" value="@Model.IdDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">IdLocation</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="IdLocation" value="@Model.IdLocation">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">BankAccount</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="BankAccount" value="@Model.BankAccount">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">TaxCode</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="TaxCode" value="@Model.TaxCode">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">SocialInsurrance</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="SocialInsurrance" value="@Model.SocialInsurrance">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">HealthInsurrance</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="HealthInsurrance" value="@Model.HealthInsurrance">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">Household</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Household" value="@Model.Household">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">Address</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Address" value="@Model.Address">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">EducationBackgroundId</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="EducationBackgroundId" value="@Model.EducationBackgroundId">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">SchoolId</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="SchoolId" value="@Model.SchoolId">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">Specialized</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Specialized" value="@Model.Specialized">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Email" value="@Model.Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">JoinDate</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="JoinDate" value="@Model.JoinDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">LeaveDate</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="LeaveDate" value="@Model.LeaveDate">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">TrainingContactStart</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="TrainingContactStart" value="@Model.TrainingContactStart">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">TrainingContactEnd</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="TrainingContactEnd" value="@Model.TrainingContactEnd">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">TrailContactStart</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="TrailContactStart" value="@Model.TrailContactStart">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">TrailContactEnd</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="TrailContactEnd" value="@Model.TrailContactEnd">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">OfficialContactStart</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="OfficialContactStart" value="@Model.OfficialContactStart">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">OfficialContactEnd</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="OfficialContactEnd" value="@Model.OfficialContactEnd">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">CurrentContract</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="CurrentContract" value="@Model.CurrentContract">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">Status</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="Status" value="@Model.Status">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">DateCreated</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="DateCreated" value="@Model.DateCreated">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="input-Default" class="col-sm-2 control-label">DateModified</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="DateModified" value="@Model.DateModified">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="panel panel-white">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title">Suggestions</h4>
+            </div>
+            <div class="panel-body">
+                <div class="team">
+                    <div class="team-member">
+                        <div class="online on"></div>
+                        <img src="http://via.placeholder.com/40x40" alt="">
+                    </div>
+                    <div class="team-member">
+                        <div class="online on"></div>
+                        <img src="http://via.placeholder.com/40x40" alt="">
+                    </div>
+                    <div class="team-member">
+                        <div class="online off"></div>
+                        <img src="http://via.placeholder.com/40x40" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-white">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title">Some Info</h4>
+            </div>
+            <div class="panel-body">
+                <p>Integer tincidunt varius nulla, vitae facilisis nibh ornare dignissim. Morbi in orci vitae magna vestibulum placerat at vel augue. Pellentesque rutrum ipsum eget odio</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row -->

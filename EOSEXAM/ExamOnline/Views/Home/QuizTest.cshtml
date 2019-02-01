@@ -101,7 +101,7 @@
                     question = {
                         QuestionId: $('#ID_Q'+ i).text(),
                         QuestionContent: $('#Q' + i).text(),
-                        YourAnswer: $('input[name=inlineRadioOptions' + i + ']:checked').val(),
+                        YourAnswer: ($('input[name=inlineRadioOptions' + i + ']:checked').val() != null) ? $('input[name=inlineRadioOptions' + i + ']:checked').val() : null,
                         IsCorrect: false
                     }
                     resultQuiz.push(question);

@@ -19,7 +19,7 @@ namespace ExamOnline.Repositories
             Db = _Db;
         }
         public IEnumerable<User> GetAll() {
-            var users = from u in Db.User
+            var users = (from u in Db.User
                         join r in Db.Role
                         on u.RoleId equals r.RoleId
                         select new User
@@ -29,7 +29,7 @@ namespace ExamOnline.Repositories
                             Password = u.Password,
                             RoleId = r.RoleId,
                             Role = r
-                        };
+                        }).OrderByDescending(c => c.UserId);
             return users.ToList();
         }
 

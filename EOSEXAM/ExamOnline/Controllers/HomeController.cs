@@ -125,13 +125,13 @@ namespace ExamOnline.Controllers
         {
             ViewData["User"] = HttpContext.Session.GetString(SessionUser);
             ViewData["Subject"] = HttpContext.Session.GetString(SessionSubject);
-            int n = int.Parse(HttpContext.Session.GetString(NumberQuestion));
-            Random rd = new Random();
-            int randomSkip = rd.Next(0, 3);
-            IQueryable<Question> questions = _Question.GetQuestionBySubjectName(HttpContext.Session.GetString(SessionSubject)).Skip(randomSkip).Take(n);
-
-            if (ViewData["Subject"] != null && ViewData["User"] != null)
+            
+            if (ViewData["Subject"] != null && ViewData["User"] != null && HttpContext.Session.GetString(NumberQuestion) != null)
             {
+                int n = int.Parse(HttpContext.Session.GetString(NumberQuestion));
+                Random rd = new Random();
+                int randomSkip = rd.Next(0, 3);
+                IQueryable<Question> questions = _Question.GetQuestionBySubjectName(HttpContext.Session.GetString(SessionSubject)).Skip(randomSkip).Take(n);
                 return View(questions);
             }
             else

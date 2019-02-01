@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="">
+    <title>@ViewData["Title"]  | D2CMS </title>
+        
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link href="../../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">    
+    <link href="../../assets/css/space.min.css" rel="stylesheet">
+    <link href="../../assets/css/custom.css" rel="stylesheet">
+
+</head>
+<body>
+    <div class="page-container">
+        <div class="page-inner login-page">
+            <div id="main-wrapper" class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6 login-box">
+                        <h4 class="login-title">LDAP Sign in</h4>
+                        <span class="txt-danger">@ViewData["LoginErrorMessage"]</span>
+                        <form action="@Url.Action("Login","Authen")" method="post">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">LDAP Account</label>
+                                <input type="text" class="form-control" name="username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" name="password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

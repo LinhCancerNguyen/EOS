@@ -20,7 +20,7 @@ namespace ExamOnline.Repositories
             Db = _Db;
         }
 
-        public IEnumerable<Subject> All => Db.Subject;
+        public IEnumerable<Subject> All => Db.Subject.OrderByDescending(c => c.SubjectId);
 
         public void Add(Subject _Subject)
         {
@@ -41,7 +41,7 @@ namespace ExamOnline.Repositories
                 Text = s.SubjectName,
                 Value = s.SubjectId.ToString()
 
-            });
+            }).OrderByDescending(c => c.Value);
 
             return subjects;
         }
@@ -52,7 +52,7 @@ namespace ExamOnline.Repositories
             {
                 SubjectId = s.SubjectId,
                 SubjectName = s.SubjectName
-            });
+            }).OrderByDescending(c => c.SubjectId);
             return subjects;
         }
 

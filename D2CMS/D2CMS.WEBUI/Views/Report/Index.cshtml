@@ -1,0 +1,210 @@
+﻿@model D2CMS.WEBUI.Models.ReportResponse
+@{
+    ViewData["Title"] = "Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-title">
+    <h3 class="breadcrumb-header">Report</h3>
+</div>
+<div id="main-wrapper">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel panel-white">
+                <div class="panel-heading clearfix">
+                    <h4 class="panel-title">Your report on: @ViewData["CurrentViewTargetMonth"]</h4>
+                    <div class="pull-right">
+                        <button class="btn btn-primary" id="btnSave">Save Report</button>
+                    </div>
+                    <div class="pull-left">
+                        <button class="btn btn-default btn-sm" id="btnToggle" current-mode="hidden">Toggle All Input</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive invoice-table">
+                        <table class="table" id="report-table">
+                            <thead>
+                                @if (Model.User.TitleId == (int)D2CMS.CORE.Enum.TITLE.TESTER)
+                                {
+                                    @Html.Partial("_TesterReportHeader")
+                                }
+                                else if (Model.User.TitleId == (int)D2CMS.CORE.Enum.TITLE.DEVELOPER)
+                                {
+                                    @Html.Partial("_DeveloperReportHeader")
+                                }
+                                else if (Model.User.TitleId == (int)D2CMS.CORE.Enum.TITLE.TEAMLEADER)
+                                {
+                                    @Html.Partial("_LeaderReportHeader")
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <th>Date</th>
+                                        <th class="">Study</th>
+                                        <th class="">Docs</th>
+                                        <th class="">Coding</th>
+                                        <th class="">Test-Code</th>
+                                        <th class="">Fix-bug</th>
+                                        <th class="">Test-Bug</th>
+                                        <th class="">Training</th>
+                                        <th class="">Comm</th>
+                                        <th class="">Manage</th>
+                                        <th class="">Meeting</th>
+                                        <th class="">Reviewing</th>
+                                        <th class="">Others</th>
+                                        <th class="text-center">Total</th>
+                                        <th>Note</th>
+                                        <th>Status</th>
+                                    </tr>
+                                }
+                            </thead>
+                            <tbody>
+                                @foreach (var report in Model.Reports)
+                                {
+                                    var trClass = report.ReportDate.DayOfWeek == DayOfWeek.Sunday || report.ReportDate.DayOfWeek == DayOfWeek.Saturday ? "holidays" : "";
+                                    <text>
+                                        <tr class="@trClass" data-id="@report.Id">
+                                            <td>
+                                                @report.ReportDate.ToString("yyyy/MM/dd (ddd)")
+                                                <input type="hidden" name="Id" value="@report.Id" />
+                                                <input type="hidden" name="ReportDate" value="@report.ReportDate" />
+                                            </td>
+                                            @if (Model.User.TitleId == (int)D2CMS.CORE.Enum.TITLE.TESTER)
+                                            {
+                                                @Html.Partial("_TesterReportInput", report)
+                                            }
+                                            else if (Model.User.TitleId == (int)D2CMS.CORE.Enum.TITLE.DEVELOPER)
+                                            {
+                                                @Html.Partial("_DeveloperReportInput", report)
+                                            }
+                                            else if (Model.User.TitleId == (int)D2CMS.CORE.Enum.TITLE.TEAMLEADER)
+                                            {
+                                                @Html.Partial("_LeaderReportInput", report)
+                                            }
+                                            else
+                                            {
+                                                <td><input type="text" class="form-control report-time text-right" name="Study" value="@report.Study"></td>
+                                                <td><input type="text" class="form-control report-time text-right" name="Docs" value="@report.Docs"></td>
+                                                <td><input type="text" class="form-control report-time text-right" name="Coding" value="@report.Coding"></td>
+                                                <td><input type="text" class="form-control report-time text-right" name="TestCode" value="@report.TestCode"></td>
+                                                <td><input type="text" class="form-control report-time text-right" name="FixBug" value="@report.FixBug"></td>
+                                                <td><input type="text" class="form-control report-time text-right" name="TestBug" value="@report.TestBug"></td>
+                                                <td><input type="text" class="form-control report-time text-right" name="Training" value="@report.Training"></td>
+                                                <td><input type="text" class="form-control report-time text-right" name="Communication" value="@report.Communication"></td>
+                                                <td><input type="text" class="form-control report-time text-right" name="Manage" value="@report.Manage"></td>
+                                                <td><input type="text" class="form-control report-time text-right" name="Meeting" value="@report.Meeting"></td>
+                                                <td><input type="text" class="form-control report-time text-right" name="Reviewing" value="@report.Reviewing"></td>
+                                            }
+                                            <td><input type="text" class="form-control report-time text-right" name="Others" value="@report.Others"></td>
+                                            <td><label class="text-right totalcount"></label></td>
+                                            <td><input type="text" class="form-control" name="Note" value="@report.Note"></td>
+                                            <td><span class="label label-success">N/A</span></td>
+                                        </tr>
+                                    </text>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- Row -->
+
+</div>
+@section Scripts {
+
+    <script>
+        $(document).ready(function () {
+            $('.report-time').each(function () {
+                var totalCount = 0
+                $(this).closest('tr').find('.report-time').each(function () {
+                    totalCount += parseFloat($(this).val())
+                })
+                var totalCountElement = $(this).closest('tr').find('.totalcount');
+                if (totalCount > 8) {
+                    totalCountElement.addClass('danger');
+                } else {
+                    totalCountElement.removeClass('danger');
+                }
+                totalCountElement.text(totalCount);
+            });
+
+            $('.report-time').on('blur', function () {
+                if ($(this).val() == "") {
+                    $(this).val(0);
+                }
+            });
+
+            $('.report-time').on('keyup', function () {
+                
+                var totalCount = 0
+                $(this).closest('tr').find('.report-time').each(function () {
+                    totalCount += parseFloat($(this).val())
+                })
+                var totalCountElement = $(this).closest('tr').find('.totalcount');
+                if (totalCount > 8) {
+                    totalCountElement.addClass('danger');
+                } else {
+                    totalCountElement.removeClass('danger');
+                }
+                totalCountElement.text(totalCount);
+                $(this).closest('tr').addClass('isChange');
+            });
+            $('input[name="Note"]').on("blur", function () {
+                $(this).closest('tr').addClass('isChange');
+            })
+            $('#btnToggle').on('click', function () {
+                if ($(this).attr("current-mode") == "hidden") {
+                    $("#report-table .hidden").removeClass("hidden").addClass("togglehidden");
+                    $(this).attr("current-mode", "togglehidden");
+                } else {
+                    $("#report-table .togglehidden").removeClass("togglehidden").addClass("hidden");
+                    $(this).attr("current-mode", "hidden");
+                }
+            });
+
+            $("#btnSave").on("click", function () {
+                var reports = [];
+                $("#report-table tr.isChange").each(function () {
+                    var that = $(this);
+                    var report = {};
+                    report.Id = that.find('input[name="Id"]').val();
+                    report.ReportDate = that.find('input[name="ReportDate"]').val();
+                    report.Study = that.find('input[name="Study"]').val();
+                    report.Docs = that.find('input[name="Docs"]').val();
+                    report.Coding = that.find('input[name="Coding"]').val();
+                    report.TestCode = that.find('input[name="TestCode"]').val();
+                    report.FixBug = that.find('input[name="FixBug"]').val();
+                    report.TestBug = that.find('input[name="TestBug"]').val();
+                    report.Training = that.find('input[name="Training"]').val();
+                    report.Communication = that.find('input[name="Communication"]').val();
+                    report.Meeting = that.find('input[name="Meeting"]').val();
+                    report.Manage = that.find('input[name="Manage"]').val();
+                    report.Reviewing = that.find('input[name="Reviewing"]').val();
+                    report.Others = that.find('input[name="Others"]').val();
+                    report.Note = that.find('input[name="Note"]').val();
+                    reports.push(report);
+                });
+                if (reports.length == 0) {
+                    return;
+                }
+                console.log(reports);
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Save","Report")',
+                    data: {
+                        "reports": reports
+                    },
+                    success: function (data) {
+                        if (data.result == "success") {
+                            toastr["success"]("Report Saved");
+                        } else {
+                            toastr["error"]("Cannot save your reports. Please try again.");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+
+}

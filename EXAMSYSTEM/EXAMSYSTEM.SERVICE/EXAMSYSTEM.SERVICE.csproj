@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\EXAMSYSTEM.CORE\EXAMSYSTEM.CORE.csproj" />
+    <ProjectReference Include="..\EXAMSYSTEM.INFRA\EXAMSYSTEM.INFRA.csproj" />
+  </ItemGroup>
+
 </Project>

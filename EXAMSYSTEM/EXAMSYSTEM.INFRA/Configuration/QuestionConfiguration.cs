@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EXAMSYSTEM.INFRA.Configuration
 {
@@ -16,7 +14,11 @@ namespace EXAMSYSTEM.INFRA.Configuration
             builder.Property(q => q.QuestionContent).IsRequired();
             builder.Property(q => q.CreateDate).HasDefaultValue(DateTime.Now);
             builder.Property(q => q.ModifiedDate).HasDefaultValue(DateTime.Now);
-
+            builder.Property(q => q.Option1).IsRequired();
+            builder.Property(q => q.Option2).IsRequired();
+            builder.Property(q => q.Option3);
+            builder.Property(q => q.Option4);
+            builder.Property(q => q.Answer).IsRequired();
             builder.HasOne(q => q.Subject)
                 .WithMany(q => q.Questions)
                 .HasForeignKey(q => q.SubjectId)

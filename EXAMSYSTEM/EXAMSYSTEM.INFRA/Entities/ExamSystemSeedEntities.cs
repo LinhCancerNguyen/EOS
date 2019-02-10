@@ -10,24 +10,6 @@ namespace EXAMSYSTEM.INFRA.Entities
     {
         public static void Run(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Role>().HasData(
-                
-            );
-            modelBuilder.Entity<User>().HasData(
-
-            );
-            modelBuilder.Entity<Subject>().HasData(
-
-            );
-            modelBuilder.Entity<UserExam>().HasData(
-
-            );
-            modelBuilder.Entity<Question>().HasData(
-
-            );
-            modelBuilder.Entity<Option>().HasData(
-
-            );
         }
     }
 }

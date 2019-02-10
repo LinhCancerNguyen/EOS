@@ -16,7 +16,6 @@ namespace EXAMSYSTEM.INFRA.Entities
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<UserExam> UserExams { get; set; }
         public DbSet<Question> Questions { get; set; }
-        public DbSet<Option> Options { get; set; }
 
         public virtual void Commit()
         {
@@ -32,7 +31,6 @@ namespace EXAMSYSTEM.INFRA.Entities
             modelBuilder.ApplyConfiguration(new SubjectConfiguration());
             modelBuilder.ApplyConfiguration(new UserExamConfiguration());
             modelBuilder.ApplyConfiguration(new QuestionConfiguration());
-            modelBuilder.ApplyConfiguration(new OptionConfiguration());
             //Seed
             ExamSystemSeedEntities.Run(modelBuilder);
         }

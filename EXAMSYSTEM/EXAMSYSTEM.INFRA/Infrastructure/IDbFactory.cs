@@ -1,10 +1,12 @@
-﻿using System;
+﻿using EXAMSYSTEM.INFRA.Entities;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace EXAMSYSTEM.INFRA.Infrastructure
 {
-    interface IDbFactory
+    public interface IDbFactory : IDisposable
     {
+        ExamSystemEntities Init();
     }
 }

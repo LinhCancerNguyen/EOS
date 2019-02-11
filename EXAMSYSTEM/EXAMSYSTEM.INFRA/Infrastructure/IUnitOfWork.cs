@@ -4,7 +4,8 @@ using System.Text;
 
 namespace EXAMSYSTEM.INFRA.Infrastructure
 {
-    interface IUnitOfWork
+    public interface IUnitOfWork
     {
+        void Commit();
     }
 }

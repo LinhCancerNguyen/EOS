@@ -1,0 +1,50 @@
+﻿@model EXAMSYSTEM.CORE.Models.User
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <form class="forms-sample" asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="UserId" />
+                    <div class="form-group row">
+                        <label asp-for="Username" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="Username" class="form-control" id="exampleInputEmail2">
+                        </div>
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Email" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="Email" class="form-control" id="exampleInputEmail2">
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Password" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="Password" class="form-control" id="exampleInputPassword2">
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="RoleId" class="col-sm-3 col-form-label">Role</label>
+                        <div class="col-sm-9">
+                            <select type="text" class="form-control" id="exampleInputEmail2" asp-for="RoleId" asp-items="@(new SelectList(ViewBag.ListOfRole, "RoleId", "RoleName"))"></select>
+                            <span asp-validation-for="RoleId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success mr-2">Save</button>
+                        <button class="btn btn-light" asp-action="Index">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

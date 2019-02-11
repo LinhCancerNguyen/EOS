@@ -1,0 +1,73 @@
+﻿@model EXAMSYSTEM.CORE.ModelViews.SubjectView
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 stretch-card">
+            <div class="card">
+                <div class="card-body" style="border:2px dashed #cecaca; border-radius: 10px;">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p><strong>Welcome: </strong> @ViewData["User"]</p>
+                        </div>
+                        <div class="col-md-5">
+                        </div>
+                        <div class="col-md-3">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <form class="forms-sample" method="post">
+                        <div class="card-body">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group" style="text-align: center">
+                                <h3 style="font-family:'Times New Roman', Times, serif">Select Subject (^-^)</h3>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                </div>
+                                <div class="col-sm-6">
+                                    @Html.DropDownListFor(model => model.SubjectId, Model.ListOfSubject, new { @class = "form-control" })<br />
+                                </div>
+                                <div class="col-sm-3">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label asp-for="NumberOfQuestion"></label>
+                                </div>
+                                <div class="col-sm-3">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-sm-3">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="number" class="form-control" id="exampleInputEmail2" placeholder="Number" asp-for="NumberOfQuestion" min="1" max="10">
+                                    <span asp-validation-for="NumberOfQuestion" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-3">
+                                </div>
+                            </div>
+                            <div class="form-group" style="text-align: center">
+                                <button type="submit" class="btn btn-success mr-5">Select</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,43 @@
+﻿@model EXAMSYSTEM.CORE.Models.UserExam
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-12 stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <form class="forms-sample" asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="UserExamId" />
+                    <div class="form-group row">
+                        <label asp-for="SubjectId" class="col-sm-3 col-form-label">Subject</label>
+                        <div class="col-sm-9">
+                            <select type="text" class="form-control" id="exampleInputEmail2" asp-for="SubjectId" asp-items="@(new SelectList(ViewBag.ListOfSubject, "SubjectId", "SubjectName"))"></select>
+                            <span asp-validation-for="SubjectId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="UserId" class="col-sm-3 col-form-label">User</label>
+                        <div class="col-sm-9">
+                            <select type="text" class="form-control" id="exampleInputEmail2" asp-for="UserId" asp-items="@(new SelectList(ViewBag.ListOfUser, "UserId", "Username"))"></select>
+                            <span asp-validation-for="UserId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label asp-for="Score" class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="Score" class="form-control" id="exampleInputEmail2">
+                        </div>
+                        <span asp-validation-for="Score" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success mr-2">Save</button>
+                        <button class="btn btn-light" asp-action="Index">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

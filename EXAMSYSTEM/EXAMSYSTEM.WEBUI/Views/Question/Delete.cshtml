@@ -1,0 +1,55 @@
+﻿@model EXAMSYSTEM.CORE.Models.Question
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-12 stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Subject.SubjectName)</td>
+                            <td>@Html.DisplayFor(model => model.Subject.SubjectName)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.QuestionContent)</td>
+                            <td>@Html.DisplayFor(model => model.QuestionContent)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Option1)</td>
+                            <td>@Html.DisplayFor(model => model.Option1)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Option2)</td>
+                            <td>@Html.DisplayFor(model => model.Option2)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Option3)</td>
+                            <td>@Html.DisplayFor(model => model.Option3)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Option4)</td>
+                            <td>@Html.DisplayFor(model => model.Option4)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Answer)</td>
+                            <td>@Html.DisplayFor(model => model.Answer)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <form asp-action="Delete">
+                    <div class="form-group">
+                        <input type="hidden" asp-for="QuestionId" />
+                        <button type="submit" class="btn btn-danger mr-2">Delete</button>
+                        <button asp-action="Index" class="btn btn-light">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

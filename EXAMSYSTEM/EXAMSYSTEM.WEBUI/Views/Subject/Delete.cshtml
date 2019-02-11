@@ -1,0 +1,35 @@
+﻿@model EXAMSYSTEM.CORE.Models.Subject
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-12 stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <tbody>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.SubjectName)</td>
+                            <td>@Html.DisplayFor(model => model.SubjectName)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.SubjectCode)</td>
+                            <td>@Html.DisplayFor(model => model.SubjectCode)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <form asp-action="Delete">
+                    <div class="form-group">
+                        <input type="hidden" asp-for="SubjectId" />
+                        <button type="submit" class="btn btn-danger mr-2">Delete</button>
+                        <button asp-action="Index" class="btn btn-light">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

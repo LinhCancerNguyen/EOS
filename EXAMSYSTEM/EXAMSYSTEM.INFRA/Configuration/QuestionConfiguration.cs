@@ -12,8 +12,6 @@ namespace EXAMSYSTEM.INFRA.Configuration
             builder.ToTable("Question");
             builder.HasKey(q => q.QuestionId);
             builder.Property(q => q.QuestionContent).IsRequired();
-            builder.Property(q => q.CreateDate).HasDefaultValue(DateTime.Now);
-            builder.Property(q => q.ModifiedDate).HasDefaultValue(DateTime.Now);
             builder.Property(q => q.Option1).IsRequired();
             builder.Property(q => q.Option2).IsRequired();
             builder.Property(q => q.Option3);

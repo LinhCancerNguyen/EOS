@@ -7,7 +7,7 @@ namespace EXAMSYSTEM.CORE.Models
     public class Role
     {
         public int RoleId { get; set; }
-        public int RoleName { get; set; }
+        public string RoleName { get; set; }
 
         public ICollection<User> Users { get; set; }
     }

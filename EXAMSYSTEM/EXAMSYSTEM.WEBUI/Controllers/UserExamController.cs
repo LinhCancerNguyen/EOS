@@ -1,0 +1,82 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using EXAMSYSTEM.CORE.Models;
+using EXAMSYSTEM.CORE.ModelViews;
+using EXAMSYSTEM.SERVICE.Core;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+
+namespace EXAMSYSTEM.WEBUI.Controllers
+{
+    [Authorize]
+    public class UserExamController : Controller
+    {
+        private readonly IConfiguration config;
+        private readonly IUserExamService userExamService;
+        private readonly IUserService userService;
+        private readonly ISubjectService subjectService;
+
+        public UserExamController(IConfiguration config, IUserExamService userExamService, IUserService userService, ISubjectService subjectService)
+        {
+            this.userExamService = userExamService;
+            this.userService = userService;
+            this.subjectService = subjectService;
+            this.config = config;
+        }
+
+        public IActionResult Index()
+        {
+            return View(userExamService.GetUserExams());
+        }
+
+        
+
+        [HttpGet]
+        public IActionResult Delete(int Id)
+        {
+            var userExam = userExamService.GetUserExam(Id);
+            if (userExam == null)
+            {
+                return RedirectToAction("Index");
+            }
+            return View(userExam);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirm(int Id)
+        {
+            userExamService.Delete(userExamService.GetUserExam(Id));
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int Id)
+        {
+            var userExam = userExamService.GetUserExam(Id);
+            if (userExam == null)
+            {
+                return RedirectToAction("Index");
+            }
+            IEnumerable<Subject> subjects = subjectService.GetSubjects();
+            ViewBag.ListOfSubject = subjects;
+            IEnumerable<UserView> users = userService.GetUsers();
+            ViewBag.ListOfUser = users;
+            return View(userExam);
+        }
+
+
+        [HttpPost]
+        public IActionResult Edit(UserExam UserExam)
+        {
+            if (ModelState.IsValid)
+            {
+                userExamService.Update(UserExam);
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+    }
+}

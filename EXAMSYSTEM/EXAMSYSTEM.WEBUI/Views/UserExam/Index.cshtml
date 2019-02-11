@@ -1,0 +1,56 @@
+﻿@model IEnumerable<EXAMSYSTEM.CORE.Models.UserExam>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-12 stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive" id="ExportData">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Subject.SubjectName)</th>
+                            <th>@Html.DisplayNameFor(model => model.User.Username)</th>
+                            <th>@Html.DisplayNameFor(model => model.Score)</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@Html.DisplayFor(modelItem => item.Subject.SubjectName)</td>
+                                <td>@Html.DisplayFor(modelItem => item.User.Username)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Score)</td>
+                                <td>
+                                    <a asp-controller="UserExam" asp-action="Edit" asp-route-id="@item.UserExamId"><label class="badge badge-warning">Edit</label></a>
+                                </td>
+                                <td>
+                                    <a asp-controller="UserExam" asp-action="Delete" asp-route-id="@item.UserExamId"><label class="badge badge-danger">Delete</label></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div>
+                    <input type="button" class="btn btn-success mr-2" id="btnExport" value=" Export to Excel " />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type='text/javascript'>
+        function exportexcel() {
+            $("#btnExport").table2excel({
+                name: "Table2Excel",
+                filename: "myFileName",
+                fileext: ".xls"
+            });
+        }  
+    </script>
+}

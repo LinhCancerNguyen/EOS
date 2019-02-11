@@ -15,8 +15,6 @@ namespace EXAMSYSTEM.INFRA.Configuration
 
             builder.HasKey(u => u.UserExamId);
             builder.Property(u => u.Score).IsRequired();
-            builder.Property(u => u.CreateDate).HasDefaultValue(DateTime.Now);
-            builder.Property(u => u.ModifiedDate).HasDefaultValue(DateTime.Now);
 
             builder.HasOne(u => u.User)
                 .WithMany(u => u.UserExams)

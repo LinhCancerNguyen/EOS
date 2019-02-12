@@ -36,7 +36,7 @@ namespace EXAMSYSTEM.WEBUI.Controllers
             }
             if (!String.IsNullOrEmpty(searchSubject))
             {
-                userExams = userExams.Where(s => s.Subject.SubjectName == searchSubject);
+                userExams = userExams.Where(s => s.Subject.SubjectName.Contains(searchSubject));
             }
             return View(userExams);
         }

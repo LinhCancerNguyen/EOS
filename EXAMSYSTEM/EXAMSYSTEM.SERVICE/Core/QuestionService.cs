@@ -1,4 +1,5 @@
 ﻿using EXAMSYSTEM.CORE.Models;
+using EXAMSYSTEM.CORE.ModelViews;
 using EXAMSYSTEM.INFRA.Infrastructure;
 using EXAMSYSTEM.INFRA.Repositories;
 using System;
@@ -11,7 +12,9 @@ namespace EXAMSYSTEM.SERVICE.Core
     public interface IQuestionService
     {
         IEnumerable<Question> GetQuestions();
+        IEnumerable<Question> GetQuestionBySubjectName(string subject);
         Question GetQuestion(int Id);
+        AnswerView GetResult(AnswerView answer);
         void CreateQuestion(Question question);
         void SaveQuestion();
         void Update(Question question);
@@ -46,9 +49,19 @@ namespace EXAMSYSTEM.SERVICE.Core
             return questionRepository.GetDetailById(Id);
         }
 
+        public IEnumerable<Question> GetQuestionBySubjectName(string subject)
+        {
+            return questionRepository.GetQuestionBySubjectName(subject);
+        }
+
         public IEnumerable<Question> GetQuestions()
         {
             return questionRepository.GetQuestions().OrderByDescending(q => q.QuestionId);
+        }
+
+        public AnswerView GetResult(AnswerView answer)
+        {
+            return questionRepository.GetResult(answer);
         }
 
         public void SaveQuestion()

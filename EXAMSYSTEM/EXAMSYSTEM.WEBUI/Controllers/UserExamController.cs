@@ -27,9 +27,18 @@ namespace EXAMSYSTEM.WEBUI.Controllers
             this.config = config;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchName, string searchSubject)
         {
-            return View(userExamService.GetUserExams());
+            var userExams = userExamService.GetUserExams();
+            if (!String.IsNullOrEmpty(searchName))
+            {
+                userExams = userExams.Where(s => s.User.Username.Contains(searchName));
+            }
+            if (!String.IsNullOrEmpty(searchSubject))
+            {
+                userExams = userExams.Where(s => s.Subject.SubjectName == searchSubject);
+            }
+            return View(userExams);
         }
 
         

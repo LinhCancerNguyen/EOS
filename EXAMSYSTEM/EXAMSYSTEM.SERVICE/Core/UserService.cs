@@ -14,6 +14,7 @@ namespace EXAMSYSTEM.SERVICE.Core
         IEnumerable<UserView> GetUsers();
         User GetUser(int id);
         User Login(string username, string password);
+        User GetUserByName(string name);
         void CreateUser(User user);
         void SaveUser();
         void Update(User user);
@@ -46,6 +47,11 @@ namespace EXAMSYSTEM.SERVICE.Core
         public User GetUser(int id)
         {
             return userRepository.GetDetailById(id);
+        }
+
+        public User GetUserByName(string name)
+        {
+            return userRepository.GetUserByName(name);
         }
 
         public IEnumerable<UserView> GetUsers()

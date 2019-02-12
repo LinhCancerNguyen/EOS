@@ -24,10 +24,23 @@ namespace EXAMSYSTEM.INFRA.Repositories
 
             return subjects;
         }
+        public Subject GetSubjectbyName(string name)
+        {
+            var subject = (from s in this.DbContext.Subjects
+                           where s.SubjectName == name
+                           select new Subject
+                           {
+                               SubjectId = s.SubjectId,
+                               SubjectName = s.SubjectName,
+                               SubjectCode = s.SubjectCode
+                           }).FirstOrDefault();
+            return subject;
+        }
     }
 
     public interface ISubjectRepository : IRepository<Subject>
     {
         IEnumerable<SelectListItem> GetAllSubjects();
+        Subject GetSubjectbyName(string name);
     }
 }

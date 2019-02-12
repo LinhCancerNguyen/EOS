@@ -7,8 +7,19 @@
 <div class="col-12 stretch-card">
     <div class="card">
         <div class="card-body">
-            <div class="table-responsive" id="ExportData">
-                <table class="table table-hover">
+            <form class="forms-sample" asp-action="Index" method="get">
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label"> Username</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" name="searchName" id="exampleInputEmail2">
+                    </div>
+                    <div class="col-sm-1">
+                        <input type="submit" class="btn btn-success mr-2" value="Search" />
+                    </div>
+                </div>
+            </form>
+            <div class="table-responsive">
+                <table class="table table-hover" id="tblData">
                     <thead>
                         <tr>
                             <th>@Html.DisplayNameFor(model => model.Subject.SubjectName)</th>
@@ -35,22 +46,8 @@
                         }
                     </tbody>
                 </table>
-                <div>
-                    <input type="button" class="btn btn-success mr-2" id="btnExport" value=" Export to Excel " />
-                </div>
             </div>
         </div>
     </div>
 </div>
 
-@section scripts{
-    <script type='text/javascript'>
-        function exportexcel() {
-            $("#btnExport").table2excel({
-                name: "Table2Excel",
-                filename: "myFileName",
-                fileext: ".xls"
-            });
-        }  
-    </script>
-}

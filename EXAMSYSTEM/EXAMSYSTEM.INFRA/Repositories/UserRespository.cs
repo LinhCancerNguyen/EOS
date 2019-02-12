@@ -64,11 +64,30 @@ namespace EXAMSYSTEM.INFRA.Repositories
 
             return users;
         }
+
+        public User GetUserByName(string name)
+        {
+            var user = (from u in this.DbContext.Users
+                        join r in this.DbContext.Roles
+                        on u.RoleId equals r.RoleId
+                        where u.Username == name
+                        select new User
+                        {
+                            UserId = u.UserId,
+                            Username = u.Username,
+                            Email = u.Email,
+                            Password = u.Password,
+                            RoleId = r.RoleId,
+                            Role = r
+                        }).FirstOrDefault();
+            return user;
+        }
     }
     public interface IUserRepository : IRepository<User>
     {
         User Login(string Username, string Password);
         User GetDetailById(int Id);
         IEnumerable<UserView> GetUsers();
+        User GetUserByName(string name);
     }
 }

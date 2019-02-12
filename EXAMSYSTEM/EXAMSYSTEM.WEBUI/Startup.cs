@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using EXAMSYSTEM.CORE.Models;
 using EXAMSYSTEM.INFRA.Infrastructure;
 using EXAMSYSTEM.INFRA.Repositories;
+using EXAMSYSTEM.INFRA.Validator;
 using EXAMSYSTEM.SERVICE.Core;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -45,7 +45,7 @@ namespace EXAMSYSTEM.WEBUI
 
             //enforce URL to lowercase
             services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddMvc();
+            services.AddMvc().AddFluentValidation(fv => { fv.RegisterValidatorsFromAssemblyContaining<Startup>(); });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             var builder = new ContainerBuilder();
@@ -65,6 +65,9 @@ namespace EXAMSYSTEM.WEBUI
 
             // types automatically.
             builder.Populate(services);
+
+            services.AddSingleton<AbstractValidator<User>, UserValidator>();
+            services.AddSingleton<IValidator<User>, UserValidator>();
 
             IServiceProvider serviceProvider = new AutofacServiceProvider(builder.Build());
             return serviceProvider;
@@ -92,7 +95,7 @@ namespace EXAMSYSTEM.WEBUI
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Admin}/{action=Login}/{id?}");
+                    template: "{controller=Quizz}/{action=Login}/{id?}");
             });
         }
     }

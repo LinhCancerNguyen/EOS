@@ -1,0 +1,145 @@
+﻿@model IEnumerable<EXAMSYSTEM.CORE.Models.Question>
+
+@{
+    int count = 1, countRight = 0;
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 stretch-card">
+            <div class="card">
+                <div class="card-body row" style="border:2px dashed #cecaca; border-radius: 10px">
+                    <div class="col-md-4">
+                        <p><strong>Welcome: </strong> @ViewData["User"]</p>
+                    </div>
+                    <div class="col-md-5">
+                        <p><strong>Subject:</strong> @ViewData["Subject"]</p>
+                    </div>
+                    <div class="col-md-3">
+                        <p><strong>Time: </strong><label id="timer"></label></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 stretch-card">
+            <div class="card">
+                <div class="card-body" id="success" style="font-family:'Courier New'">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-panel">
+        <div class="row">
+            <div class="col-lg-12 grid-margin stretch-card">
+                <div class="card">
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var question in Model)
+                        {
+                            <div class="card-body">
+                                <div class="Question" style="padding: 2%;">
+                                    <span class="card-title"> @string.Format("{0}{1}.", "Q", count)</span>
+                                    <span id="@string.Format("{0}{1}", "ID_Q", count)" style="display:none;">@question.QuestionId</span>
+                                    <p style="display: inline; padding: 2%;" id="@string.Format("{0}{1}", "Q", count)">@question.QuestionContent</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" style="padding-left: 75px;">
+                                        <div class="form-group">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countRight)" value="@question.Option1"> @question.Option1
+                                            </label><br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" style="padding-left: 75px;">
+                                        <div class="form-group">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countRight)" value="@question.Option2"> @question.Option2
+                                            </label><br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" style="padding-left: 75px;">
+                                        <div class="form-group">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countRight)" value="@question.Option3"> @question.Option3
+                                            </label><br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12" style="padding-left: 75px;">
+                                        <div class="form-group">
+                                            <label class="radio-inline">
+                                                <input type="radio" name="@string.Format("{0}{1}", "inlineRadioOptions",count)" id="@string.Format("{0}{1}", "inlineRadio", countRight)" value="@question.Option4"> @question.Option4
+                                            </label><br />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="@string.Format("{0}{1}{2}", "Ans","Q", count)">
+                                </div>
+                            </div>
+                            count++;
+                        }
+                        <span id="countQuections" style="display:none;">@count</span>
+                        <button id="SubmitQuiz" type="submit" class="btn btn-success mr-3" style="text-align:center"><span class="glyphicon glyphicon-ok"></span>Submit Quiz</button>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts{
+    <script type='text/javascript'>
+        var start = new Date();
+        t = setInterval(function () {
+            var timeLeft = (60000 - (new Date() - start)) / 1000;
+            document.getElementById('timer').innerHTML = Math.floor(timeLeft / 60) + ":" + Math.floor(timeLeft % 60);
+            if (timeLeft <= 0) {
+                clearInterval();
+                document.getElementById('timer').innerHTML = '<strong style="color:red">0:0</strong>';
+                Submit();
+            }
+        }, 1000);
+        $(document).ready(function () {
+            $('#SubmitQuiz').click(function () {
+                Submit();
+
+            });
+        });
+        function Submit() {
+            var n = $('#countQuections').text();
+            var yourAnswers = [], countQuestion = parseInt(n), question = {}, j = 0;
+            for (var i = 1; i < countQuestion; i++) {
+                question = {
+                    QuestionId: $('#ID_Q' + i).text(),
+                    QuestionContent: $('#Q' + i).text(),
+                    YourAnswer: ($('input[name=inlineRadioOptions' + i + ']:checked').val() != null) ? $('input[name=inlineRadioOptions' + i + ']:checked').val() : null,
+                    IsCorrect: false
+                }
+                yourAnswers.push(question);
+            }
+            console.log(yourAnswers);
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("QuizTest", "Quizz")',
+                data: { yourAnswers },
+                success: function (response) {
+                },
+                error: function (response) {
+                }
+
+            });
+            document.getElementById('success').innerHTML = '<strong style="color:red; text-align:center">Nộp bài thành công!!!</strong>';
+            document.getElementById("SubmitQuiz").disabled = true;
+            clearInterval(t);
+        }
+    </script>
+}

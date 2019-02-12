@@ -15,6 +15,7 @@ namespace EXAMSYSTEM.SERVICE.Core
         IEnumerable<Subject> GetSubjects();
         IEnumerable<SelectListItem> GetAllSubjects();
         Subject GetSubject(int Id);
+        Subject GetSubjectByName(string name);
         void CreateSubject(Subject subject);
         void SaveSubject();
         void Update(Subject subject);
@@ -52,6 +53,11 @@ namespace EXAMSYSTEM.SERVICE.Core
         public Subject GetSubject(int Id)
         {
             return subjectRepository.GetById(Id);
+        }
+
+        public Subject GetSubjectByName(string name)
+        {
+            return subjectRepository.GetSubjectbyName(name);
         }
 
         public IEnumerable<Subject> GetSubjects()

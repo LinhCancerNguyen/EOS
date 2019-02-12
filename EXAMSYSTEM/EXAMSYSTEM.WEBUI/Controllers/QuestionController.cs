@@ -38,6 +38,7 @@ namespace EXAMSYSTEM.WEBUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Question model)
         {
             if (ModelState.IsValid)

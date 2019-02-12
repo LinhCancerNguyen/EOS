@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace EXAMSYSTEM.WEBUI.Controllers
 {
+    [Authorize]
     public class QuizzController : Controller
     {
         private readonly IConfiguration config;
@@ -55,7 +56,6 @@ namespace EXAMSYSTEM.WEBUI.Controllers
                 if (user != null)
                 {
                     HttpContext.Session.SetString(SessionUser, user.Username);
-
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
@@ -129,6 +129,60 @@ namespace EXAMSYSTEM.WEBUI.Controllers
             }
 
             return View();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult QuizTest()
+        {
+            ViewData["User"] = HttpContext.Session.GetString(SessionUser);
+            ViewData["Subject"] = HttpContext.Session.GetString(SessionSubject);
+
+            if (ViewData["Subject"] != null && ViewData["User"] != null && HttpContext.Session.GetString(NumberQuestion) != null)
+            {
+                int n = int.Parse(HttpContext.Session.GetString(NumberQuestion));
+                string subject = (string)HttpContext.Session.GetString(SessionSubject);
+                Random rd = new Random();
+                int randomSkip = rd.Next(0, 3);
+                IEnumerable<Question> questions = questionService.GetQuestionBySubjectName(subject).Skip(randomSkip).Take(n);
+                return View(questions);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+        }
+
+        [HttpPost]
+        public void QuizTest(List<AnswerView> yourAnswers)
+        {
+            List<AnswerView> finalResultQuiz = new List<AnswerView>();
+            int right = 0;
+            float score = 0;
+            foreach (AnswerView answser in yourAnswers)
+            {
+                AnswerView result = questionService.GetResult(answser);
+                finalResultQuiz.Add(result);
+                if(result.IsCorrect)
+                {
+                    right++;
+                }
+            }
+            score = ((float)right / (float)finalResultQuiz.Count) * 10;
+            string subject = (string)HttpContext.Session.GetString(SessionSubject);
+            string user = (string)HttpContext.Session.GetString(SessionUser);
+            User userModel = userService.GetUserByName(user);
+            Subject subjectModel = subjectService.GetSubjectByName(subject);
+            UserExam userExam = new UserExam {
+                Score = score,
+                UserId = userModel.UserId,
+                SubjectId = subjectModel.SubjectId
+            };
+            if (ModelState.IsValid)
+            {
+                userExamService.CreateUserExam(userExam);
+            }
         }
     }
 }

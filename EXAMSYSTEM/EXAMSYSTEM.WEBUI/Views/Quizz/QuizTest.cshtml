@@ -25,7 +25,7 @@
     <div class="row">
         <div class="col-12 stretch-card">
             <div class="card">
-                <div class="card-body" id="success" style="font-family:'Courier New'">
+                <div class="card-body" id="success" style="font-family:'Times New Roman'; font-size:large">
 
                 </div>
             </div>
@@ -100,9 +100,11 @@
     <script type='text/javascript'>
         var start = new Date();
         t = setInterval(function () {
-            var timeLeft = (60000 - (new Date() - start)) / 1000;
+            var n = $('#countQuections').text();
+            var time = parseInt(n) - 1;
+            var timeLeft = (time * 10000 - (new Date() - start)) / 1000;
             document.getElementById('timer').innerHTML = Math.floor(timeLeft / 60) + ":" + Math.floor(timeLeft % 60);
-            if (timeLeft <= 0) {
+            if (timeLeft <= 1) {
                 clearInterval();
                 document.getElementById('timer').innerHTML = '<strong style="color:red">0:0</strong>';
                 Submit();
@@ -137,6 +139,8 @@
                 }
 
             });
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
             document.getElementById('success').innerHTML = '<strong style="color:red; text-align:center">Nộp bài thành công!!!</strong>';
             document.getElementById("SubmitQuiz").disabled = true;
             clearInterval(t);

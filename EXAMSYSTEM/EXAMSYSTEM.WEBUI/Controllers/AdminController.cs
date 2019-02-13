@@ -25,7 +25,7 @@ namespace EXAMSYSTEM.WEBUI.Controllers
             this.config = config;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View();
@@ -42,23 +42,29 @@ namespace EXAMSYSTEM.WEBUI.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(User model, string returnUrl)
+        public IActionResult Login(User model, string returnUrl)
         {
+            ClaimsIdentity identity = null;
+            bool isAuthenticated = false;
             if (ModelState.IsValid)
             {
                 var user = userService.Login(model.Username, model.Password);
                 if (user != null && user.Role.RoleName == "Admin")
                 {
-                    var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                        new Claim(ClaimTypes.Name, user.Username),
-                        new Claim(ClaimTypes.GivenName, user.Password),
-                    };
-                    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                    identity = new ClaimsIdentity(new[] {
+                    new Claim(ClaimTypes.Name, model.Username),
+                    new Claim(ClaimTypes.Role, "Admin")
+                }, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    isAuthenticated = true;
+                }
+                if (isAuthenticated)
+                {
                     var principal = new ClaimsPrincipal(identity);
-                    await HttpContext.SignInAsync(principal);
-                    return RedirectToAction("Index", "Admin");
+
+                    var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                    return RedirectToLocal(returnUrl);
                 }
                 else
                 {

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using EXAMSYSTEM.CORE.Models;
 using EXAMSYSTEM.CORE.ModelViews;
 using EXAMSYSTEM.SERVICE.Core;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-
+using OfficeOpenXml;
 namespace EXAMSYSTEM.WEBUI.Controllers
 {
     [Authorize]
@@ -27,6 +27,7 @@ namespace EXAMSYSTEM.WEBUI.Controllers
             this.config = config;
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Index(string searchName, string searchSubject)
         {
             var userExams = userExamService.GetUserExams();
@@ -41,8 +42,7 @@ namespace EXAMSYSTEM.WEBUI.Controllers
             return View(userExams);
         }
 
-        
-
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Delete(int Id)
         {
@@ -61,6 +61,7 @@ namespace EXAMSYSTEM.WEBUI.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Edit(int Id)
         {

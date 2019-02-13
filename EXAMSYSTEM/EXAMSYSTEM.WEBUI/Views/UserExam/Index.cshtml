@@ -20,10 +20,13 @@
                     <div class="col-sm-1">
                         <input type="submit" class="btn btn-success mr-2" value="Search" />
                     </div>
+                    <div class="col-sm-3">
+                    </div>
+
                 </div>
             </form>
-            <div class="table-responsive">
-                <table class="table table-hover" id="tblData">
+            <div class="table-responsive" id="dvData">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>@Html.DisplayNameFor(model => model.Subject.SubjectName)</th>
@@ -54,4 +57,10 @@
         </div>
     </div>
 </div>
+
+@section scripts{ 
+    <script type="text/javascript">
+      
+    </script>
+}
 

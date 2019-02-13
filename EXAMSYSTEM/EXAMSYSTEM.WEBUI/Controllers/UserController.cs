@@ -24,11 +24,13 @@ namespace EXAMSYSTEM.WEBUI.Controllers
             this.config = config;
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult Index()
         {
             return View(userService.GetUsers());
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Create()
         {
@@ -48,6 +50,7 @@ namespace EXAMSYSTEM.WEBUI.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Delete(int Id)
         {
@@ -66,6 +69,7 @@ namespace EXAMSYSTEM.WEBUI.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public IActionResult Edit(int Id)
         {

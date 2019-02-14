@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoAPI", "DemoAPI\DemoAPI.csproj", "{7B56BDCC-DBCC-4158-A02C-1682FBF554E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeService", "DemoAPI\EmployeeService.csproj", "{7B56BDCC-DBCC-4158-A02C-1682FBF554E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeDataAccess", "EmployeeDataAccess\EmployeeDataAccess.csproj", "{6919DF88-C90E-43F9-9819-4F54F181B4FC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeeClient", "EmployeeClient\EmployeeClient.csproj", "{89F747CD-B225-4B7A-8874-FD1569C07A59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{7B56BDCC-DBCC-4158-A02C-1682FBF554E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7B56BDCC-DBCC-4158-A02C-1682FBF554E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7B56BDCC-DBCC-4158-A02C-1682FBF554E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6919DF88-C90E-43F9-9819-4F54F181B4FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6919DF88-C90E-43F9-9819-4F54F181B4FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6919DF88-C90E-43F9-9819-4F54F181B4FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6919DF88-C90E-43F9-9819-4F54F181B4FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89F747CD-B225-4B7A-8874-FD1569C07A59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89F747CD-B225-4B7A-8874-FD1569C07A59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89F747CD-B225-4B7A-8874-FD1569C07A59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89F747CD-B225-4B7A-8874-FD1569C07A59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

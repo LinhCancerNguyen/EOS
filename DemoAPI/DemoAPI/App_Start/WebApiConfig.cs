@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
+using WebApiContrib.Formatting.Jsonp;
 
 namespace DemoAPI
 {
@@ -25,6 +27,19 @@ namespace DemoAPI
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+
+            //config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            //config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+            //config.Formatters.Remove(config.Formatters.XmlFormatter);
+
+            //var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+            //config.Formatters.Insert(0, jsonpFormatter);
+
+            EnableCorsAttribute cros = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors(cros);
+
+            config.Filters.Add(new RequireHttpsAttribute());
         }
     }
 }

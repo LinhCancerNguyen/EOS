@@ -12,7 +12,7 @@
     <div class="col-12 stretch-card">
         <div class="card">
             <div class="card-body">
-                <form class="forms-sample" asp-action="Edit">
+                <form class="forms-sample" asp-action="Edit" id="EditQuestion">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="QuestionId" />
                     <div class="form-group row">
@@ -25,47 +25,47 @@
                     <div class="form-group row">
                         <label asp-for="QuestionContent" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <input asp-for="QuestionContent" class="form-control" id="exampleInputEmail2">
+                            <input asp-for="QuestionContent" class="form-control" id="question">
                         </div>
                         <span asp-validation-for="QuestionContent" class="text-danger"></span>
                     </div>
                     <div class="form-group row">
                         <label asp-for="Option1" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <input asp-for="Option1" class="form-control" id="exampleInputEmail2">
+                            <input asp-for="Option1" class="form-control" id="option1">
                         </div>
                         <span asp-validation-for="Option1" class="text-danger"></span>
                     </div>
                     <div class="form-group row">
                         <label asp-for="Option2" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <input asp-for="Option2" class="form-control" id="exampleInputEmail2">
+                            <input asp-for="Option2" class="form-control" id="option2">
                         </div>
                         <span asp-validation-for="Option2" class="text-danger"></span>
                     </div>
                     <div class="form-group row">
                         <label asp-for="Option3" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <input asp-for="Option3" class="form-control" id="exampleInputEmail2">
+                            <input asp-for="Option3" class="form-control" id="option3">
                         </div>
                         <span asp-validation-for="Option3" class="text-danger"></span>
                     </div>
                     <div class="form-group row">
                         <label asp-for="Option4" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <input asp-for="Option4" class="form-control" id="exampleInputEmail2">
+                            <input asp-for="Option4" class="form-control" id="option4">
                         </div>
                         <span asp-validation-for="Option4" class="text-danger"></span>
                     </div>
                     <div class="form-group row">
                         <label asp-for="Answer" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <input asp-for="Answer" class="form-control" id="exampleInputEmail2">
+                            <input asp-for="Answer" class="form-control" id="answer">
                         </div>
                         <span asp-validation-for="Answer" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success mr-2">Save</button>
+                        <button type="submit" class="btn btn-success mr-2" id="Edit">Save</button>
                         <button class="btn btn-light" asp-action="Index">Cancel</button>
                     </div>
                 </form>
@@ -73,3 +73,21 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script type="text/javascript">
+        document.getElementById("EditQuestion").addEventListener("keyup", function () {
+            var question = document.getElementById('question').value;
+            var option1 = document.getElementById('option1').value;
+            var option2 = document.getElementById('option2').value;
+            var option3 = document.getElementById('option3').value;
+            var option4 = document.getElementById('option4').value;
+            var answer = document.getElementById('answer').value;
+            if (question != "" && option1 != "" && option2 != "" && option3 != "" && option4 != "" && answer != "") {
+                document.getElementById('Edit').removeAttribute("disabled");
+            } else {
+                document.getElementById('Edit').setAttribute("disabled", null);
+            }
+        });
+    </script>
+}

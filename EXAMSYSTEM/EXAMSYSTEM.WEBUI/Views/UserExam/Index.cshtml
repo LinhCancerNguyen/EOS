@@ -13,20 +13,19 @@
                     <div class="col-sm-2">
                         <input type="text" class="form-control" name="searchName" id="exampleInputEmail2">
                     </div>
+                    <div class="col-sm-2"></div>
                     <label class="col-sm-1 col-form-label"> Subject</label>
                     <div class="col-sm-2">
                         <input type="text" class="form-control" name="searchSubject" id="exampleInputEmail2">
                     </div>
+                    <div class="col-sm-2"></div>
                     <div class="col-sm-1">
                         <input type="submit" class="btn btn-success mr-2" value="Search" />
                     </div>
-                    <div class="col-sm-3">
-                    </div>
-
                 </div>
             </form>
-            <div class="table-responsive" id="dvData">
-                <table class="table table-hover">
+            <div class="table-responsive">
+                <table class="table table-hover" id="tblexportData">
                     <thead>
                         <tr>
                             <th>@Html.DisplayNameFor(model => model.Subject.SubjectName)</th>
@@ -58,9 +57,15 @@
     </div>
 </div>
 
-@section scripts{ 
+@section scripts{
     <script type="text/javascript">
-      
+        $('#btn').click(function () {
+            $('.table').table2excel({
+                exclude: ".noExl",
+                name: "Data",
+                filename: "DataResult"
+            })
+        })
     </script>
+    <script src="~/js/table2excel.js"></script>
 }
-

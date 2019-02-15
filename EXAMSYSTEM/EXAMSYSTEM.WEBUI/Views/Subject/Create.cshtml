@@ -2,31 +2,30 @@
 
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    var id = 1;
 }
 
 <div class="row">
     <div class="col-12 stretch-card">
         <div class="card">
             <div class="card-body">
-                <form class="forms-sample" asp-action="Create">
+                <form class="forms-sample" asp-action="Create" id="CreateSubject">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group row">
                         <label asp-for="SubjectName" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Name" asp-for="SubjectName">
+                            <input type="text" class="form-control" id="name" placeholder="Name" asp-for="SubjectName">
                             <span asp-validation-for="SubjectName" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label asp-for="SubjectCode" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="exampleInputPassword2" placeholder="Code" asp-for="SubjectCode">
+                            <input type="text" class="form-control" id="code" placeholder="Code" asp-for="SubjectCode">
                             <span asp-validation-for="SubjectCode" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success mr-2">Create</button>
+                        <button type="submit" class="btn btn-success mr-2" id="Create">Create</button>
                         <button asp-action="Index" class="btn btn-light">Cancel</button>
                     </div>
                 </form>
@@ -34,3 +33,17 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script type="text/javascript">
+        document.getElementById("CreateSubject").addEventListener("keyup", function () {
+            var name = document.getElementById('name').value;
+            var code = document.getElementById('code').value;
+            if (name != "" && code != "") {
+                document.getElementById('Create').removeAttribute("disabled");
+            } else {
+                document.getElementById('Create').setAttribute("disabled", null);
+            }
+        });
+    </script>
+}

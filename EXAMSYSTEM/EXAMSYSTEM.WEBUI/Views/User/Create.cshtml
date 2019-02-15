@@ -8,38 +8,38 @@
     <div class="col-12 stretch-card">
         <div class="card">
             <div class="card-body">
-                <form class="forms-sample" asp-action="Create">
+                <form class="forms-sample" asp-action="Create" id="CreateUser">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group row">
                         <label asp-for="Username" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="UserName" asp-for="Username" >
-                            <span asp-validation-for="Username" class="text-danger"></span>
+                            <input type="text" class="form-control" id="name" placeholder="UserName" asp-for="Username">
+                            <span asp-validation-for="Username" class="text-danger" id="nameerror"></span>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label asp-for="Email" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Email" asp-for="Email">
-                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <input type="text" class="form-control" id="email" placeholder="Email" asp-for="Email">
+                            <span asp-validation-for="Email" class="text-danger" id="emailerror"></span>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label asp-for="Password" class="col-sm-3 col-form-label"></label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" asp-for="Password">
-                            <span asp-validation-for="Password" class="text-danger"></span>
+                            <input type="password" class="form-control" id="password" placeholder="Password" asp-for="Password">
+                            <span asp-validation-for="Password" class="text-danger" id="passworderror"></span>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label asp-for="RoleId" class="col-sm-3 col-form-label">Role</label>
                         <div class="col-sm-9">
-                            <select type="text" class="form-control" id="exampleInputEmail2" asp-for="RoleId" asp-items="@(new SelectList(ViewBag.ListOfRole, "RoleId", "RoleName"))"></select>
+                            <select type="text" class="form-control" id="role" asp-for="RoleId" asp-items="@(new SelectList(ViewBag.ListOfRole, "RoleId", "RoleName"))"></select>
                             <span asp-validation-for="RoleId" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success mr-2">Create</button>
+                        <button id="Create" type="submit" class="btn btn-success mr-2" disabled>Create</button>
                         <button asp-action="Index" class="btn btn-light">Cancel</button>
                     </div>
                 </form>
@@ -47,3 +47,18 @@
         </div>
     </div>
 </div>
+
+@section scripts{
+    <script type="text/javascript">
+        document.getElementById("CreateUser").addEventListener("keyup", function () {
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            if (name != "" && email != "" && password != "") {
+                document.getElementById('Create').removeAttribute("disabled");
+            } else {
+                document.getElementById('Create').setAttribute("disabled", null);
+            }
+        });
+    </script>
+}

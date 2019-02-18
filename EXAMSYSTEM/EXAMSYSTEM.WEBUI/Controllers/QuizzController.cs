@@ -151,7 +151,7 @@ namespace EXAMSYSTEM.WEBUI.Controllers
                 int n = int.Parse(HttpContext.Session.GetString(NumberQuestion));
                 string subject = (string)HttpContext.Session.GetString(SessionSubject);
                 Random rd = new Random();
-                int randomSkip = rd.Next(0, 3);
+                int randomSkip = rd.Next(0, 5);
                 IEnumerable<Question> questions = questionService.GetQuestionBySubjectName(subject).Skip(randomSkip).Take(n);
                 return View(questions);
             }

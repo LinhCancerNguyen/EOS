@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using OfficeOpenXml;
 namespace EXAMSYSTEM.WEBUI.Controllers
 {
     [Authorize]
@@ -28,7 +27,7 @@ namespace EXAMSYSTEM.WEBUI.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public IActionResult Index(string searchName, string searchSubject)
+        public IActionResult Index(string searchName, string searchSubject, int? page)
         {
             var userExams = userExamService.GetUserExams();
             if (!String.IsNullOrEmpty(searchName))

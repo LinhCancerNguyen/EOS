@@ -86,8 +86,20 @@
                             </div>
                             count++;
                         }
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <input type="checkbox" id="Check" onclick="myFunction()"/>
+                                </div>
+                                <div class="col-md-3">
+                                    <p>
+                                        I want to submit quizz
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                         <span id="countQuections" style="display:none;">@count</span>
-                        <button id="SubmitQuiz" type="submit" class="btn btn-success mr-3" style="text-align:center"><span class="glyphicon glyphicon-ok"></span>Submit Quiz</button>
+                        <button id="SubmitQuiz" disabled type="submit" class="btn btn-success mr-3" style="text-align:center"><span class="glyphicon glyphicon-ok"></span>Submit Quiz</button>
                     }
                 </div>
             </div>
@@ -113,9 +125,16 @@
         $(document).ready(function () {
             $('#SubmitQuiz').click(function () {
                 Submit();
-
             });
         });
+        function myFunction() {
+            var checkBox = document.getElementById("Check");
+            if (checkBox.checked == true) {
+                document.getElementById("SubmitQuiz").disabled = false;
+            } else {
+                document.getElementById("SubmitQuiz").disabled = true;
+            }
+        }
         function Submit() {
             var n = $('#countQuections').text();
             var yourAnswers = [], countQuestion = parseInt(n), question = {}, j = 0;
@@ -137,11 +156,11 @@
                 },
                 error: function (response) {
                 }
-
             });
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;
             document.getElementById('success').innerHTML = '<strong style="color:red; text-align:center">Nộp bài thành công!!!</strong>';
+            document.getElementById("Check").disabled = true;
             document.getElementById("SubmitQuiz").disabled = true;
             clearInterval(t);
         }
